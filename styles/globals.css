@@ -3,36 +3,67 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 226, 121, 28;
-  /* --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255; */
-  --color-primary-rgb: #e2791c;
-  --color-secondary-rgb: #191919;
+  --color-primary: #e2791c;
+  --color-secondary: #191919;
 }
 
-/* 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
- */
 body {
-  /*color: rgb(var(--foreground-rgb));
-   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb)); */
-  color: var(--color-primary-rgb);
-  background: var(--color-secondary-rgb);
+  color: var(--color-primary);
+  background: var(--color-secondary);
 }
 
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Bold.ttf') format('truetype');
+  font-weight: 700; /* 使用数值权重 */
+  font-style: normal; /* 样式通常是 normal 或 italic */
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* 使用数值权重 */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 500; /* 使用数值权重 */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-weight: 400; /* 使用数值权重 */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('/fonts/NotoSansTC-Bold.ttf') format('truetype');
+  font-weight: 700; /* 使用数值权重 */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('/fonts/NotoSansTC-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* 使用数值权重 */
+  font-style: normal;
+}
+@font-face {
+  font-family: 'NotoSansTC';
+  src: url('/fonts/NotoSansTC-Medium.ttf') format('truetype');
+  font-weight: 500; /* 使用数值权重 */
+  font-style: normal;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari 和 Opera */
+}
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 和 Edge */
 }

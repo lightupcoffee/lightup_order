@@ -12,13 +12,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'NotoSansTC', 'ui-sans-serif', 'system-ui'],
+      },
+      fontWeight: {
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+      },
       colors: {
-        primary: 'var(--color-primary-rgb)',
-        secondary: 'var(--color-secondary-rgb',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
       },
       textColor: {
-        primary: 'var(--color-primary-rgb)',
-        secondary: 'var(--color-secondary-rgb',
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
       },
       // 覆蓋預設的背景顏色
       backgroundColor: ({ theme }) => theme('colors'),
@@ -28,10 +37,10 @@ module.exports = {
       //     DEFAULT: theme('colors.primary', 'currentColor'),
       //   }),
       // },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
+      // backgroundImage: {
+      //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      //   'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      // },
     },
   },
   plugins: [],
