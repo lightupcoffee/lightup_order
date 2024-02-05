@@ -110,10 +110,9 @@ function Home({ categorys, products }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   let categorys = []
   let products = []
-
   await axios
     .get('/category/getAllCategory')
     .then((res) => {
@@ -135,7 +134,7 @@ export async function getStaticProps() {
       categorys: categorys,
       products: products,
     },
-    revalidate: 10, // In seconds (optional, for incremental static regeneration)
+    //revalidate: 10, // In seconds (optional, for incremental static regeneration)
   }
 }
 
