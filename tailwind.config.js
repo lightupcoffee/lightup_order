@@ -22,12 +22,25 @@ module.exports = {
         bold: '700',
       },
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
+        //primary: 'var(--color-primary)',
+        primary: {
+          DEFAULT: 'var(--color-primary)',
+          500: 'var(--color-primary-500)', // 添加 '500' 色調
+        },
+        secondary: {
+          DEFAULT: 'var(--color-secondary)',
+          500: 'var(--color-secondary-500)', // 添加 '500' 色調
+        },
       },
       textColor: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
+        primary: {
+          DEFAULT: 'var(--color-primary)',
+          500: 'var(--color-primary-500)', // 添加 '500' 色調
+        },
+        secondary: {
+          DEFAULT: 'var(--color-secondary)',
+          500: 'var(--color-secondary-500)', // 添加 '500' 色調
+        },
       },
       // 覆蓋預設的背景顏色
       backgroundColor: ({ theme }) => theme('colors'),

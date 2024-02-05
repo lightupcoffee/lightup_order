@@ -8,12 +8,7 @@ function Product({ products, category, car, editcar, onBack }) {
     <div className="flex h-full  flex-col">
       <div className="item-center flex cursor-pointer border-b-2 border-current py-4 pt-9" onClick={onBack}>
         <span className="my-auto">
-          <Image
-            src="/images/play.svg" // 圖片的路徑
-            alt="back" // 圖片描述
-            width={18} // 圖片的寬度
-            height={18} // 圖片的高度
-          />
+          <Image src="/images/play.svg" alt="back" width={18} height={18} />
         </span>
         <div className="text-2xl"> {category?.name}</div>
       </div>
@@ -22,7 +17,11 @@ function Product({ products, category, car, editcar, onBack }) {
           products.map((product) => (
             <div
               onClick={() => {
-                setcurrentitem(product.productid)
+                if (currentitem !== product.productid) {
+                  setcurrentitem(product.productid)
+                } else {
+                  setcurrentitem(null)
+                }
               }}
               key={product.productid}
               className={`mt-5 flex w-full items-center justify-between rounded-3xl border border-current px-6 py-3 text-start ${currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
@@ -33,35 +32,31 @@ function Product({ products, category, car, editcar, onBack }) {
                 <div className="mt-2 text-xs ">NT ${product.price} </div>
               </div>
 
-              <div className="flex gap-4">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation() // 阻止事件冒泡
-                    editcar({ type: 'minus', productid: product.productid })
-                  }}
-                >
-                  <Image
-                    src="/images/minus.svg" // 圖片的路徑
-                    alt="minus" // 圖片描述
-                    width={24} // 圖片的寬度
-                    height={24} // 圖片的高度
-                  />
-                </button>
-                <span className="font-bold">{car[product.productid] ?? 0}</span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation() // 阻止事件冒泡
-                    editcar({ type: 'plus', productid: product.productid })
-                  }}
-                >
-                  <Image
-                    src="/images/plus.svg" // 圖片的路徑
-                    alt="plus" // 圖片描述
-                    width={24} // 圖片的寬度
-                    height={24} // 圖片的高度
-                  />
-                </button>
-              </div>
+              {((car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid) && (
+                <div className="flex gap-4">
+                  {currentitem === product.productid && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation() // 阻止事件冒泡
+                        editcar({ type: 'minus', product: product })
+                      }}
+                    >
+                      <Image src="/images/minus.svg" alt="minus" width={24} height={24} />
+                    </button>
+                  )}
+                  <span className="font-bold">{car[product.productid]?.count ?? 0}</span>
+                  {currentitem === product.productid && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation() // 阻止事件冒泡
+                        editcar({ type: 'plus', product: product })
+                      }}
+                    >
+                      <Image src="/images/plus.svg" alt="plus" width={24} height={24} />
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           ))}
       </div>

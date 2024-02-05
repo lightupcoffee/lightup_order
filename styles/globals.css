@@ -4,7 +4,9 @@
 
 :root {
   --color-primary: #e2791c;
+  --color-primary-500: #e2791c80;
   --color-secondary: #191919;
+  --color-secondary-500: #19191980;
 }
 
 body {

@@ -1,15 +1,15 @@
 // components/FooterBanner.js
 import React from 'react'
 
-const cButton = ({ text, click, disable }) => {
+const cButton = ({ text, click, disable, mode }) => {
   const handleclick = () => {
-    if (!disable) {
+    if (!disable && click) {
       click()
     }
   }
   return (
     <div
-      className="rounded-full  bg-primary py-2 text-center font-bold text-secondary focus:bg-secondary focus:text-primary"
+      className={` ${mode === 'dark' ? 'bg-secondary text-primary focus:bg-primary focus:text-secondary' : 'bg-primary text-secondary focus:bg-secondary focus:text-primary'} rounded-full py-2 text-center font-bold  `}
       onClick={handleclick}
     >
       {text}

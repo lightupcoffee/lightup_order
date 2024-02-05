@@ -1,17 +1,23 @@
 // pages/index.js
 import React, { useState, useEffect } from 'react'
+
 import axios from '../utils/axiosInstance'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import Category from './order/category'
 import Product from './order/product'
 import NotificationModal from './components/notificationModal'
+import ShoppingCar from './components/shoppingcar'
 
 function Home({ categorys, products }) {
-  const [showNotificationModal, setshowNotificationModal] = useState(false)
+  const router = useRouter()
+  const { No } = router.query
+  const [showNotificationModal, setshowNotificationModal] = useState(true)
   const [showproduct, setshowproduct] = useState(false)
   const [productlist, setproductlist] = useState([])
   const [selectedcategory, setselectedcategory] = useState(1)
   const [car, setcar] = useState({})
+  const [showShoppingCar, setshowShoppingCar] = useState(false)
   const selectCategory = (target) => {
     setselectedcategory(target)
     setproductlist(products.filter((x) => x.categoryid === target.categoryid))
@@ -32,29 +38,30 @@ function Home({ categorys, products }) {
     setshowNotificationModal(false)
   }
   const editcar = (item) => {
-    let newCar = { ...car } // 创建car的副本
+    let newCar = { ...car }
+    const key = item.product.productid
+    if (!newCar[key]) {
+      newCar[key] = {
+        product: item.product,
+        count: 0,
+      }
+    }
     switch (item.type) {
       case 'plus':
-        if (!newCar[item.productid]) {
-          newCar[item.productid] = 1
-        } else {
-          newCar[item.productid] += 1
-        }
+        newCar[key].count += 1
         break
 
       case 'minus':
-        if (newCar[item.productid] && newCar[item.productid] >= 1) {
-          newCar[item.productid] -= 1
+        if (newCar[key] >= 1) {
+          newCar[key] -= 1
         }
-        break
-
-      default:
-        // 处理其他可能的情况
         break
     }
     setcar(newCar) // 使用新对象更新状态
   }
-
+  const openCar = () => {
+    setshowShoppingCar(true)
+  }
   return (
     <div className="container mx-auto flex h-screen flex-col px-5 lg:max-w-7xl">
       <div className="flex justify-between pb-4 pt-9">
@@ -67,7 +74,7 @@ function Home({ categorys, products }) {
             layout="responsive" // 圖片的佈局方式
           />
         </div>
-        <div>
+        <div onClick={openCar}>
           <Image
             src="/images/car.svg" // 圖片的路徑
             alt="購物車" // 圖片描述
@@ -106,6 +113,15 @@ function Home({ categorys, products }) {
       <div className="" style={{ height: '56px' }}>
         {/* footbanner空間 */}
       </div>
+      {showShoppingCar && (
+        <ShoppingCar
+          car={Object.values(car)}
+          no={No}
+          onClose={() => {
+            setshowShoppingCar(false)
+          }}
+        ></ShoppingCar>
+      )}
     </div>
   )
 }
