@@ -2,8 +2,13 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-function Product({ products, category, car, editcar, onBack }) {
+function Product({ products, category, car, editcar, onBack, showShoppingCar }) {
   const [currentitem, setcurrentitem] = useState(false)
+  useEffect(() => {
+    if (showShoppingCar) {
+      setcurrentitem(null)
+    }
+  }, [showShoppingCar])
   return (
     <div className="flex h-full  flex-col">
       <div className="item-center flex cursor-pointer border-b-2 border-current py-4 pt-9" onClick={onBack}>
@@ -24,7 +29,7 @@ function Product({ products, category, car, editcar, onBack }) {
                 }
               }}
               key={product.productid}
-              className={`mt-5 flex w-full items-center justify-between rounded-3xl border border-current px-6 py-3 text-start ${currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
+              className={`rounded-7xl mt-5 flex w-full items-center justify-between border border-current px-6 py-3 text-start ${currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
             >
               <div>
                 <div>{product.name} </div>

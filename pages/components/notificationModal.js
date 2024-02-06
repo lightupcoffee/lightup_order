@@ -4,8 +4,8 @@ import CButton from './cbutton'
 
 const NotificationModal = ({ onClose }) => {
   return (
-    <div className="bg-primary-500 fixed inset-0 z-20 h-full w-full overflow-y-auto px-5 " id="my-modal">
-      <div className="relative top-60 mx-auto  rounded-xl bg-secondary  px-4 py-6 shadow-lg sm:w-80 md:w-96">
+    <div className="fixed inset-0 z-20 h-svh w-full  bg-primary-500 px-5 " id="my-modal">
+      <div className="relative top-52 mx-auto  rounded-xl bg-secondary  px-4 py-6 shadow-lg sm:w-80 md:w-96">
         <p className="text-center text-2xl font-bold">用餐須知</p>
         <ul className=" my-4 w-full  list-disc  pl-8 leading-8">
           <li>入店低消一杯飲品 (不含餐食和甜點)</li>
@@ -22,7 +22,7 @@ const NotificationModal = ({ onClose }) => {
           <li>不提供打包服務。</li>
         </ul>
         <div className="px-12 ">
-          <CButton text={'我知道了，我願意遵守'} click={onClose}></CButton>
+          <CButton text={'我知道了，我願意遵守'} mode={'primary'} size={'sm'} click={onClose}></CButton>
         </div>
       </div>
     </div>

@@ -52,18 +52,31 @@ function Home({ categorys, products }) {
         break
 
       case 'minus':
-        if (newCar[key] >= 1) {
-          newCar[key] -= 1
+        if (newCar[key].count >= 1) {
+          newCar[key].count -= 1
         }
         break
     }
-    setcar(newCar) // 使用新对象更新状态
+    setcar(newCar)
   }
+
+  const removeCarItem = (key) => {
+    if (key === -1) {
+      //結帳完成刪除全部購物車內容
+      setcar({})
+    } else {
+      let newCar = { ...car }
+      delete newCar[key]
+      setcar(newCar)
+    }
+  }
+
   const openCar = () => {
     setshowShoppingCar(true)
   }
+
   return (
-    <div className="container mx-auto flex h-screen flex-col px-5 lg:max-w-7xl">
+    <div className="container mx-auto flex h-svh flex-col px-5 lg:max-w-7xl">
       <div className="flex justify-between pb-4 pt-9">
         <div>
           <Image
@@ -106,13 +119,17 @@ function Home({ categorys, products }) {
             car={car}
             editcar={editcar}
             onBack={productBack}
+            showShoppingCar={showShoppingCar}
           ></Product>
         )}
       </div>
-
-      <div className="" style={{ height: '56px' }}>
-        {/* footbanner空間 */}
+      <div className="w-full  shrink-0 bg-secondary  py-4 font-semibold">
+        <div className="  flex  items-center justify-between ">
+          <div>CHANGHUA</div>
+          <div>IG : Light.up_coffee</div>
+        </div>
       </div>
+
       {showShoppingCar && (
         <ShoppingCar
           car={Object.values(car)}
@@ -120,6 +137,7 @@ function Home({ categorys, products }) {
           onClose={() => {
             setshowShoppingCar(false)
           }}
+          removeCarItem={removeCarItem}
         ></ShoppingCar>
       )}
     </div>

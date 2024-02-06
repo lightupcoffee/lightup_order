@@ -1,8 +1,12 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import CButton from './cbutton'
-const ShoppingCar = ({ car, no, onClose }) => {
+import ConfirmModal from './confirmModal'
+import OrderSuccessModal from './orderSuccessModal'
+const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
   const [totalAmount, settotalAmount] = useState(0)
+  const [showConfirmModal, setshowConfirmModal] = useState(false)
+  const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
 
   useEffect(() => {
     const total = car.reduce((res, item) => {
@@ -16,16 +20,30 @@ const ShoppingCar = ({ car, no, onClose }) => {
     event.stopPropagation()
   }
   const linepay = () => {}
+  const cashpay = () => {
+    setshowConfirmModal(true)
+  }
+  const confirmModalCancel = () => {
+    setshowConfirmModal(false)
+  }
+  const confirmModalConfirm = () => {
+    console.log('showConfirmModal', showConfirmModal)
+    console.log('showOrderSuccessModal', showOrderSuccessModal)
+    setshowConfirmModal(false)
+    setshowOrderSuccessModal(true)
+  }
+  const orderSuccessModalClose = () => {
+    setshowOrderSuccessModal(false)
+    onClose()
+    removeCarItem(-1)
+  }
   return (
     <div className="relative z-20" onClick={onClose}>
-      <div className="bg-primary-500 pointer-events-none fixed inset-0 transition-opacity"></div>
-
       <div className="pointer-events-auto fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
             <div
-              id="contant"
-              className=" flex h-full w-[18rem] flex-col overflow-y-scroll bg-primary py-12 text-secondary shadow-xl"
+              className=" flex h-full  w-72 flex-col overflow-y-scroll bg-primary py-12 text-secondary "
               onClick={stopClick}
             >
               <div className="flex items-center justify-between  px-5 pb-4">
@@ -36,18 +54,22 @@ const ShoppingCar = ({ car, no, onClose }) => {
                 {car &&
                   car.map((item) => (
                     <div
-                      key={item.product.id}
-                      className="flex items-center gap-4 rounded-full border border-current px-6 py-2"
+                      key={item.product.productid}
+                      className="flex items-center gap-4 rounded-7xl border border-current py-2 pl-6 pr-4"
                     >
                       <div className=" font-bold">
                         <div>{item.product.name}</div>
                         <div className="text-sm ">NT${item.product.price}</div>
                       </div>
-                      <div className="ml-auto flex items-center gap-1 font-bold tracking-wide">
+                      <div className="ml-auto flex items-center font-bold tracking-wide">
                         <span>x</span>
                         <b className=" text-2xl">{item.count}</b>
                       </div>
-                      <div>
+                      <div
+                        onClick={() => {
+                          removeCarItem(item.product.productid)
+                        }}
+                      >
                         <Image src="/images/trash_shadow.svg" alt="delete" width={24} height={24} />
                       </div>
                     </div>
@@ -59,14 +81,24 @@ const ShoppingCar = ({ car, no, onClose }) => {
                   <span>NT${totalAmount}</span>
                 </div>
                 <div className="mt-5 flex flex-col gap-4">
-                  <CButton text={'Line Pay'} mode={'dark'} click={linepay}></CButton>
-                  <CButton text={'現金結帳'} mode={'dark'} click={linepay}></CButton>
+                  <CButton text={'Line Pay'} mode={'secondary'} click={linepay}></CButton>
+                  <CButton text={'現金結帳'} mode={'secondary'} click={cashpay}></CButton>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      {showConfirmModal && (
+        <ConfirmModal
+          text={'確認結帳?'}
+          canceltext={'再想一下'}
+          confirmtext={'確定'}
+          onCancel={confirmModalCancel}
+          onConfirm={confirmModalConfirm}
+        ></ConfirmModal>
+      )}
+      {showOrderSuccessModal && <OrderSuccessModal onClose={orderSuccessModalClose}></OrderSuccessModal>}
     </div>
   )
 }
