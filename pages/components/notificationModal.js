@@ -5,8 +5,7 @@ import CButton from './cbutton'
 const NotificationModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-20 h-svh w-full  bg-primary-500 px-5 " id="my-modal">
-      {/* <div className="relative top-52 mx-auto  rounded-xl bg-secondary  px-4 py-6 shadow-lg sm:w-80 md:w-96"> */}
-      <div className="fixed left-1/2 top-1/2 max-w-full -translate-x-1/2 -translate-y-1/2 transform rounded-lg bg-secondary px-4 py-6  sm:w-80 md:w-96 ">
+      <div className="fixed  top-1/2 max-w-full -translate-y-1/2 transform rounded-lg bg-secondary px-4 py-6  sm:w-80 md:w-96 ">
         <p className="text-center text-2xl font-bold">用餐須知</p>
         <ul className=" my-4 w-full  list-disc  pl-8 leading-8">
           <li>入店低消一杯飲品 (不含餐食和甜點)</li>
