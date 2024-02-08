@@ -129,8 +129,8 @@ function Home({ categorys, products }) {
           ></Product>
         )}
       </div>
-      <div className="w-full  shrink-0 bg-secondary  py-4 font-semibold">
-        <div className="  flex  items-center justify-between ">
+      <div className="c1  w-full shrink-0  bg-secondary py-4">
+        <div className="  flex  items-center justify-between  ">
           <div>CHANGHUA</div>
           <div>IG : Light.up_coffee</div>
         </div>

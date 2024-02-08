@@ -14,55 +14,6 @@ body {
   background: var(--color-secondary);
 }
 
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Montserrat';
-  src: url('/fonts/Montserrat-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'NotoSansTC';
-  src: url('/fonts/NotoSansTC-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -75,4 +26,34 @@ body {
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 和 Edge */
+}
+
+.h1 {
+  /*Font size=24px Letter spacing = 0% Line height = Auto*/
+  @apply text-2xl font-bold tracking-normal;
+}
+
+.h2 {
+  /*Font size=18px Letter spacing = 5% Line height = 20 px*/
+  @apply text-lg font-bold leading-5 tracking-tighter;
+}
+
+.h3 {
+  /*Font size=16px Letter spacing = 1% Line height = 20 px*/
+  @apply text-base font-black leading-5 tracking-widest;
+}
+
+.c1 {
+  /*Font size=14px Letter spacing = 0% Line height = 18 px*/
+  @apply text-sm font-semibold leading-[1.125rem] tracking-normal;
+}
+
+.c2 {
+  /*Font size=14px Letter spacing = 0% Line height = 18 px*/
+  @apply text-sm  leading-[1.125rem] tracking-normal;
+}
+
+.paragraph {
+  /*Font size=16px Letter spacing = 0% Line height = 26 px*/
+  @apply leading-[1.625rem] tracking-normal;
 }

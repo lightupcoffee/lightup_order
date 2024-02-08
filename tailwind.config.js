@@ -13,17 +13,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'NotoSansTC', 'ui-sans-serif', 'system-ui'],
-        ch: ['NotoSansTC', 'Montserrat', 'ui-sans-serif', 'system-ui'],
-      },
-      fontWeight: {
-        normal: '400',
-        medium: '500',
-        semibold: '600',
-        bold: '700',
+        sans: ['Montserrat', 'Noto Sans TC', 'ui-sans-serif', 'system-ui'],
       },
       colors: {
-        //primary: 'var(--color-primary)',
         primary: {
           DEFAULT: 'var(--color-primary)',
           500: 'var(--color-primary-500)', // 添加 '500' 色調
@@ -62,16 +54,9 @@ module.exports = {
         '9xl': '2.3125rem',
         full: '9999px',
       },
-      // border:{
-      //   borderColor: ({ theme }) => ({
-      //     ...theme('colors'),
-      //     DEFAULT: theme('colors.primary', 'currentColor'),
-      //   }),
-      // },
-      // backgroundImage: {
-      //   'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      //   'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      // },
+      fontSize: {
+        sm: '0.875rem', //14px
+      },
     },
   },
   plugins: [],

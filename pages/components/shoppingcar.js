@@ -49,24 +49,24 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
               className=" hide-scrollbar flex  h-full w-72 flex-col overflow-y-scroll bg-primary py-12 text-secondary "
               onClick={stopClick}
             >
-              <div className="flex items-center justify-between  px-5 pb-4">
-                <div className="text-2xl font-bold">My Order</div>
-                <div className=" rounded-xl bg-secondary px-2 py-1 text-sm font-bold text-primary">Table {no}</div>
+              <div className="flex items-center justify-between  px-5 pb-3">
+                <div className="h1">My Order</div>
+                <div className=" c1 rounded-4xl bg-secondary px-2 py-1 text-primary">Table {no}</div>
               </div>
-              <div className="hide-scrollbar flex flex-1 flex-col gap-2 overflow-auto border-y-2 border-current px-5 py-4 ">
+              <div className="hide-scrollbar  flex flex-1 flex-col gap-2 overflow-auto border-y-2 border-current px-5 py-4 ">
                 {car &&
                   car.map((item) => (
                     <div
                       key={item.product.productid}
-                      className="flex items-center gap-2 rounded-7xl border border-current py-2 pl-6 pr-4"
+                      className="flex items-center gap-2.5 rounded-7xl border border-current px-6 py-2.5"
                     >
-                      <div className=" font-bold">
+                      <div className="h3">
                         <div>{item.product.name}</div>
-                        <div className="text-sm ">NT${item.product.price}</div>
+                        <div className="c1 ">NT${item.product.price}</div>
                       </div>
-                      <div className="ml-auto flex items-center font-bold tracking-wide">
-                        <span>x</span>
-                        <b className=" text-2xl">{item.count}</b>
+                      <div className="ml-auto flex items-center ">
+                        <span className="h3">x</span>
+                        <b className=" h1">{item.count}</b>
                       </div>
                       <div
                         className="cursor-pointer"
@@ -91,11 +91,11 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
                   ))}
               </div>
               <div className="px-5 py-3 ">
-                <div className="flex justify-between  py-3 text-2xl font-bold">
+                <div className="h1 flex  justify-between py-3">
                   <span>Total</span>
                   <span>NT${totalAmount}</span>
                 </div>
-                <div className="mt-5 flex flex-col gap-4">
+                <div className="mt-5 flex flex-col gap-2">
                   <CButton text={'Line Pay'} mode={'secondary'} click={linepay}></CButton>
                   <CButton text={'現金結帳'} mode={'secondary'} click={cashpay}></CButton>
                 </div>

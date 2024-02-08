@@ -15,7 +15,7 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
         <span className="my-auto">
           <Image src="/images/play.svg" alt="back" width={18} height={18} />
         </span>
-        <div className="text-2xl"> {category?.name}</div>
+        <div className="h1 "> {category?.name}</div>
       </div>
       <div className="hide-scrollbar flex-1 overflow-auto" style={{ maxHeight: '500px' }}>
         {products &&
@@ -29,13 +29,13 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                 }
               }}
               key={product.productid}
-              className={`mt-5 flex w-full cursor-pointer items-center justify-between rounded-7xl border border-current px-6 py-3 text-start 
+              className={` mt-5 flex w-full cursor-pointer items-center justify-between rounded-7xl border border-current px-6 py-3 text-start 
               ${(car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
             >
               <div>
-                <div>{product.name} </div>
-                <div className="text-sm">{product.description} </div>
-                <div className="mt-2 text-xs ">NT ${product.price} </div>
+                <div className="h2">{product.name} </div>
+                <div className="c1">{product.description} </div>
+                <div className="c2 mt-2">NT ${product.price} </div>
               </div>
 
               {((car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid) && (
@@ -49,7 +49,7 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                   >
                     <Image src="/images/plus.svg" alt="plus" width={24} height={24} />
                   </button>
-                  <div className="text-center font-bold md:order-2">{car[product.productid]?.count ?? 0}</div>
+                  <div className="h2 text-center md:order-2">{car[product.productid]?.count ?? 0}</div>
                   <button
                     className="cursor-pointer md:order-1"
                     onClick={(e) => {
