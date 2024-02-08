@@ -7,7 +7,7 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
   const [totalAmount, settotalAmount] = useState(0)
   const [showConfirmModal, setshowConfirmModal] = useState(false)
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
-
+  const [trashiconState, settrashiconState] = useState(false)
   useEffect(() => {
     const total = car.reduce((res, item) => {
       res += item.count * item.product.price
@@ -37,13 +37,16 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
     onClose()
     removeCarItem(-1)
   }
+  // const changeiconstate = (state) => {
+  //   settrashiconState(state)
+  // }
   return (
-    <div className="relative z-20" onClick={onClose}>
+    <div className="relative z-20 " onClick={onClose}>
       <div className="pointer-events-auto fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="fixed inset-y-0 right-0 flex max-w-full pl-10">
             <div
-              className=" flex h-full  w-72 flex-col overflow-y-scroll bg-primary py-12 text-secondary "
+              className=" hide-scrollbar flex  h-full w-72 flex-col overflow-y-scroll bg-primary py-12 text-secondary "
               onClick={stopClick}
             >
               <div className="flex items-center justify-between  px-5 pb-4">
@@ -55,7 +58,7 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
                   car.map((item) => (
                     <div
                       key={item.product.productid}
-                      className="flex items-center gap-4 rounded-7xl border border-current py-2 pl-6 pr-4"
+                      className="flex items-center gap-2 rounded-7xl border border-current py-2 pl-6 pr-4"
                     >
                       <div className=" font-bold">
                         <div>{item.product.name}</div>
@@ -66,11 +69,23 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem }) => {
                         <b className=" text-2xl">{item.count}</b>
                       </div>
                       <div
+                        className="cursor-pointer"
                         onClick={() => {
                           removeCarItem(item.product.productid)
                         }}
+                        onTouchStart={() => settrashiconState(true)}
+                        onTouchEnd={() => settrashiconState(false)}
+                        onMouseOver={() => settrashiconState(true)}
+                        onMouseDown={() => settrashiconState(true)}
+                        onMouseUp={() => settrashiconState(false)}
+                        onMouseLeave={() => settrashiconState(false)}
                       >
-                        <Image src="/images/trash_shadow.svg" alt="delete" width={24} height={24} />
+                        <Image
+                          src={`/images/trash_${trashiconState ? 'press' : 'default'}.svg`}
+                          alt="delete"
+                          width={24}
+                          height={24}
+                        />
                       </div>
                     </div>
                   ))}

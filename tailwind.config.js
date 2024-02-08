@@ -14,6 +14,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Montserrat', 'NotoSansTC', 'ui-sans-serif', 'system-ui'],
+        ch: ['NotoSansTC', 'Montserrat', 'ui-sans-serif', 'system-ui'],
       },
       fontWeight: {
         normal: '400',

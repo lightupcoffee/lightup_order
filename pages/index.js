@@ -1,5 +1,6 @@
 // pages/index.js
 import React, { useState, useEffect } from 'react'
+import Head from 'next/head'
 
 import axios from '../utils/axiosInstance'
 import Image from 'next/image'
@@ -12,11 +13,12 @@ import ShoppingCar from './components/shoppingcar'
 function Home({ categorys, products }) {
   const router = useRouter()
   const { No } = router.query
-  const [showNotificationModal, setshowNotificationModal] = useState(true)
+  const [showNotificationModal, setshowNotificationModal] = useState(false)
   const [showproduct, setshowproduct] = useState(false)
   const [productlist, setproductlist] = useState([])
   const [selectedcategory, setselectedcategory] = useState(1)
   const [car, setcar] = useState({})
+  const [carImageState, setcarImageState] = useState('empty')
   const [showShoppingCar, setshowShoppingCar] = useState(false)
   const selectCategory = (target) => {
     setselectedcategory(target)
@@ -29,6 +31,7 @@ function Home({ categorys, products }) {
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisited')
+    console.log('hasVisited', hasVisited)
     if (!hasVisited) {
       setshowNotificationModal(true)
       sessionStorage.setItem('hasVisited', 'true')
@@ -74,11 +77,13 @@ function Home({ categorys, products }) {
   const openCar = () => {
     setshowShoppingCar(true)
   }
-
+  useEffect(() => {
+    setcarImageState(Object.values(car).some((x) => x.count > 0) ? 'fill' : 'empty')
+  }, [car])
   return (
     <div className="container mx-auto flex h-svh flex-col px-5 lg:max-w-7xl">
       <div className="flex justify-between pb-4 pt-9">
-        <div>
+        <div className="cursor-pointer">
           <Image
             src="/images/hamburger.svg" // 圖片的路徑
             alt="hamburger" // 圖片描述
@@ -87,9 +92,10 @@ function Home({ categorys, products }) {
             layout="responsive" // 圖片的佈局方式
           />
         </div>
-        <div onClick={openCar}>
+        <div onClick={openCar} className="cursor-pointer">
           <Image
-            src="/images/car.svg" // 圖片的路徑
+            // src="/images/car.svg" // 圖片的路徑
+            src={`/images/shoppingcar_${carImageState}.svg`} // 圖片的路徑
             alt="購物車" // 圖片描述
             width={36} // 圖片的寬度
             height={36} // 圖片的高度
@@ -106,7 +112,7 @@ function Home({ categorys, products }) {
           layout="responsive" // 圖片的佈局方式
         />
       </div>
-      <div className="w-full max-w-2xl flex-1 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div className="w-full max-w-2xl flex-1 overflow-auto sm:px-6 lg:max-w-7xl lg:px-8">
         {showNotificationModal && <NotificationModal onClose={handleClose} />}
 
         {!showNotificationModal && !showproduct && (

@@ -29,7 +29,8 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                 }
               }}
               key={product.productid}
-              className={`rounded-7xl mt-5 flex w-full items-center justify-between border border-current px-6 py-3 text-start ${currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
+              className={`mt-5 flex w-full cursor-pointer items-center justify-between rounded-7xl border border-current px-6 py-3 text-start 
+              ${(car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
             >
               <div>
                 <div>{product.name} </div>
@@ -38,28 +39,26 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
               </div>
 
               {((car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid) && (
-                <div className="flex gap-4">
-                  {currentitem === product.productid && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation() // 阻止事件冒泡
-                        editcar({ type: 'minus', product: product })
-                      }}
-                    >
-                      <Image src="/images/minus.svg" alt="minus" width={24} height={24} />
-                    </button>
-                  )}
-                  <span className="font-bold">{car[product.productid]?.count ?? 0}</span>
-                  {currentitem === product.productid && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation() // 阻止事件冒泡
-                        editcar({ type: 'plus', product: product })
-                      }}
-                    >
-                      <Image src="/images/plus.svg" alt="plus" width={24} height={24} />
-                    </button>
-                  )}
+                <div className="item-center flex flex-col  md:flex-row md:gap-4 ">
+                  <button
+                    className="cursor-pointer md:order-3"
+                    onClick={(e) => {
+                      e.stopPropagation() // 阻止事件冒泡
+                      editcar({ type: 'plus', product: product })
+                    }}
+                  >
+                    <Image src="/images/plus.svg" alt="plus" width={24} height={24} />
+                  </button>
+                  <div className="text-center font-bold md:order-2">{car[product.productid]?.count ?? 0}</div>
+                  <button
+                    className="cursor-pointer md:order-1"
+                    onClick={(e) => {
+                      e.stopPropagation() // 阻止事件冒泡
+                      editcar({ type: 'minus', product: product })
+                    }}
+                  >
+                    <Image src="/images/minus.svg" alt="minus" width={24} height={24} />
+                  </button>
                 </div>
               )}
             </div>

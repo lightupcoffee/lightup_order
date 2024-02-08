@@ -12,7 +12,7 @@ function Category({ categorys, onSelect }) {
             <li
               key={category.categoryid}
               onClick={() => onSelect(category)} // 修复这里的 onClick
-              className="group relative flex cursor-pointer justify-between  border-b border-current pb-3 pt-9  text-2xl font-black text-primary"
+              className="group relative flex cursor-pointer cursor-pointer justify-between  border-b border-current pb-3 pt-9  text-2xl font-black text-primary"
             >
               <div>{category.name}</div>
               <div>
