@@ -81,71 +81,80 @@ function Home({ categorys, products }) {
     setcarImageState(Object.values(car).some((x) => x.count > 0) ? 'fill' : 'empty')
   }, [car])
   return (
-    <div className="container mx-auto flex h-svh flex-col px-5 lg:max-w-7xl">
-      <div className="flex justify-between pb-4 pt-9">
-        <div className="cursor-pointer">
-          <Image
-            src="/images/hamburger.svg" // 圖片的路徑
-            alt="hamburger" // 圖片描述
-            width={36} // 圖片的寬度
-            height={36} // 圖片的高度
-            layout="responsive" // 圖片的佈局方式
-          />
-        </div>
-        <div onClick={openCar} className="cursor-pointer">
-          <Image
-            // src="/images/car.svg" // 圖片的路徑
-            src={`/images/shoppingcar_${carImageState}.svg`} // 圖片的路徑
-            alt="購物車" // 圖片描述
-            width={36} // 圖片的寬度
-            height={36} // 圖片的高度
-            layout="responsive" // 圖片的佈局方式
-          />
-        </div>
-      </div>
-      <div className="mx-auto max-w-2xl ">
-        <Image
-          src="/images/logo_title.svg" // 圖片的路徑
-          alt="star icon" // 圖片描述
-          width={335} // 圖片的寬度
-          height={100} // 圖片的高度
-          layout="responsive" // 圖片的佈局方式
-        />
-      </div>
-      <div className="w-full max-w-2xl flex-1 overflow-auto sm:px-6 lg:max-w-7xl lg:px-8">
-        {showNotificationModal && <NotificationModal onClose={handleClose} />}
+    <div className="hide-scrollbar flex h-svh overflow-x-hidden overscroll-none">
+      <div
+        className={`relative flex h-svh w-full flex-row transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem]' : ''}`}
+      >
+        <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
+          <div className="flex justify-between pb-4 pt-9">
+            <div className="cursor-pointer">
+              <Image
+                src="/images/hamburger.svg" // 圖片的路徑
+                alt="hamburger" // 圖片描述
+                width={36} // 圖片的寬度
+                height={36} // 圖片的高度
+                layout="responsive" // 圖片的佈局方式
+              />
+            </div>
+            <div
+              onClick={() => {
+                setshowShoppingCar(!showShoppingCar)
+              }}
+              className="cursor-pointer"
+            >
+              <Image
+                // src="/images/car.svg" // 圖片的路徑
+                src={`/images/shoppingcar_${carImageState}.svg`} // 圖片的路徑
+                alt="購物車" // 圖片描述
+                width={36} // 圖片的寬度
+                height={36} // 圖片的高度
+                layout="responsive" // 圖片的佈局方式
+              />
+            </div>
+          </div>
+          <div className="mx-auto max-w-2xl ">
+            <Image
+              src="/images/logo_title.svg" // 圖片的路徑
+              alt="star icon" // 圖片描述
+              width={335} // 圖片的寬度
+              height={100} // 圖片的高度
+              layout="responsive" // 圖片的佈局方式
+            />
+          </div>
+          <div className="w-full max-w-2xl flex-1 overflow-auto sm:px-6 lg:max-w-7xl lg:px-8">
+            {showNotificationModal && <NotificationModal onClose={handleClose} />}
 
-        {!showNotificationModal && !showproduct && (
-          <Category categorys={categorys} onSelect={selectCategory}></Category>
-        )}
-        {!showNotificationModal && showproduct && (
-          <Product
-            products={productlist}
-            category={selectedcategory}
-            car={car}
-            editcar={editcar}
-            onBack={productBack}
-            showShoppingCar={showShoppingCar}
-          ></Product>
-        )}
-      </div>
-      <div className="c1  w-full shrink-0  bg-secondary py-4">
-        <div className="  flex  items-center justify-between  ">
-          <div>CHANGHUA</div>
-          <div>IG : Light.up_coffee</div>
+            {!showNotificationModal && !showproduct && (
+              <Category categorys={categorys} onSelect={selectCategory}></Category>
+            )}
+            {!showNotificationModal && showproduct && (
+              <Product
+                products={productlist}
+                category={selectedcategory}
+                car={car}
+                editcar={editcar}
+                onBack={productBack}
+                showShoppingCar={showShoppingCar}
+              ></Product>
+            )}
+          </div>
+          <div className="c1  w-full shrink-0  bg-secondary py-4">
+            <div className="  flex  items-center justify-between  ">
+              <div>CHANGHUA</div>
+              <div>IG : Light.up_coffee</div>
+            </div>
+          </div>
         </div>
       </div>
-
-      {showShoppingCar && (
-        <ShoppingCar
-          car={Object.values(car)}
-          no={No}
-          onClose={() => {
-            setshowShoppingCar(false)
-          }}
-          removeCarItem={removeCarItem}
-        ></ShoppingCar>
-      )}
+      <ShoppingCar
+        showShoppingCar={showShoppingCar}
+        car={Object.values(car)}
+        no={No}
+        onClose={() => {
+          setshowShoppingCar(false)
+        }}
+        removeCarItem={removeCarItem}
+      ></ShoppingCar>
     </div>
   )
 }

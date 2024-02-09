@@ -39,26 +39,32 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
               </div>
 
               {((car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid) && (
-                <div className="item-center flex flex-col  md:flex-row md:gap-4 ">
-                  <button
-                    className="cursor-pointer md:order-3"
-                    onClick={(e) => {
-                      e.stopPropagation() // 阻止事件冒泡
-                      editcar({ type: 'plus', product: product })
-                    }}
-                  >
-                    <Image src="/images/plus.svg" alt="plus" width={24} height={24} />
-                  </button>
-                  <div className="h2 text-center md:order-2">{car[product.productid]?.count ?? 0}</div>
-                  <button
-                    className="cursor-pointer md:order-1"
+                <div className="item-center flex gap-2   ">
+                  <Image
+                    className="cursor-pointer "
                     onClick={(e) => {
                       e.stopPropagation() // 阻止事件冒泡
                       editcar({ type: 'minus', product: product })
                     }}
-                  >
-                    <Image src="/images/minus.svg" alt="minus" width={24} height={24} />
-                  </button>
+                    src="/images/minus.svg"
+                    alt="minus"
+                    width={24}
+                    height={24}
+                  />
+
+                  <div className="h2 my-auto text-center">{car[product.productid]?.count ?? 0}</div>
+
+                  <Image
+                    className="cursor-pointer "
+                    onClick={(e) => {
+                      e.stopPropagation() // 阻止事件冒泡
+                      editcar({ type: 'plus', product: product })
+                    }}
+                    src="/images/plus.svg"
+                    alt="plus"
+                    width={24}
+                    height={24}
+                  />
                 </div>
               )}
             </div>
