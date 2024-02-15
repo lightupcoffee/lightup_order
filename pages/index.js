@@ -81,7 +81,8 @@ function Home({ categorys, products }) {
     setcarImageState(Object.values(car).some((x) => x.count > 0) ? 'fill' : 'empty')
   }, [car])
   return (
-    <div className="hide-scrollbar flex h-svh overflow-x-hidden overscroll-none">
+    <div className=" flex h-svh ">
+      {showNotificationModal && <NotificationModal onClose={handleClose} />}
       <div
         className={`relative flex h-svh w-full flex-row transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem]' : ''}`}
       >
@@ -122,8 +123,6 @@ function Home({ categorys, products }) {
             />
           </div>
           <div className="w-full max-w-2xl flex-1 overflow-auto sm:px-6 lg:max-w-7xl lg:px-8">
-            {showNotificationModal && <NotificationModal onClose={handleClose} />}
-
             {!showNotificationModal && !showproduct && (
               <Category categorys={categorys} onSelect={selectCategory}></Category>
             )}
@@ -146,6 +145,7 @@ function Home({ categorys, products }) {
           </div>
         </div>
       </div>
+
       <ShoppingCar
         showShoppingCar={showShoppingCar}
         car={Object.values(car)}

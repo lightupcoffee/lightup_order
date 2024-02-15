@@ -12,6 +12,7 @@
 body {
   color: var(--color-primary);
   background: var(--color-secondary);
+  overflow-x: hidden;
 }
 
 @layer utilities {
