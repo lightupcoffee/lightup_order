@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import CButton from './cbutton'
 
-const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar, checkout }) => {
+const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, checkout }) => {
   const [totalAmount, settotalAmount] = useState(0)
 
   const [trashiconState, settrashiconState] = useState(null)
@@ -95,7 +95,7 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar, checkou
       >
         <div className="flex items-center justify-between  px-5 pb-3">
           <div className="h1">My Order</div>
-          <div className=" c1 rounded-4xl bg-secondary px-2 py-1 text-primary">Table {no}</div>
+          <div className=" c1 rounded-4xl bg-secondary px-2 py-1 text-primary">Table {tableid}</div>
         </div>
         <div className="hide-scrollbar  flex flex-1 flex-col gap-2 overflow-auto border-y-2 border-current px-5 py-4 ">
           {car &&

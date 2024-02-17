@@ -1,7 +1,5 @@
 // pages/index.js
 import React, { useState, useEffect } from 'react'
-import Head from 'next/head'
-
 import axios from '../utils/axiosInstance'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -13,7 +11,7 @@ import ConfirmModal from './components/confirmModal'
 import OrderSuccessModal from './components/orderSuccessModal'
 function Home({ categorys, products }) {
   const router = useRouter()
-  const { No } = router.query
+  const { tableid } = router.query
   const [showNotificationModal, setshowNotificationModal] = useState(false)
   const [showproduct, setshowproduct] = useState(false)
   const [productlist, setproductlist] = useState([])
@@ -84,9 +82,25 @@ function Home({ categorys, products }) {
   const confirmModalCancel = () => {
     setshowConfirmModal(false)
   }
-  const confirmModalConfirm = () => {
+  const confirmModalConfirm = async () => {
     setshowConfirmModal(false)
     setshowOrderSuccessModal(true)
+    await axios({
+      method: 'post',
+      url: '/order/createOrder',
+      //API要求的資料
+      data: {
+        car: car,
+        tableid: tableid,
+      },
+    })
+      .then((res) => {
+        console.log('success')
+      })
+      .catch((error) => {
+        console.error('Failed to fetch data:', error)
+      })
+
     setTimeout(() => {
       orderSuccessModalClose()
     }, 3000)
@@ -107,7 +121,7 @@ function Home({ categorys, products }) {
             setshowShoppingCar(false)
           }
         }}
-        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem]' : ''}`}
+        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? 'sm:-translate-x-[18rem] md:-translate-x-0' : ''}`}
       >
         <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
           <div className="flex justify-between pb-4 pt-9">
@@ -172,7 +186,7 @@ function Home({ categorys, products }) {
       <ShoppingCar
         showShoppingCar={showShoppingCar}
         car={Object.values(car)}
-        no={No}
+        tableid={tableid}
         onClose={() => {
           setshowShoppingCar(false)
         }}
