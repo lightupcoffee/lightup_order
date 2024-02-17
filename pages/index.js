@@ -9,7 +9,8 @@ import Category from './order/category'
 import Product from './order/product'
 import NotificationModal from './components/notificationModal'
 import ShoppingCar from './components/shoppingcar'
-
+import ConfirmModal from './components/confirmModal'
+import OrderSuccessModal from './components/orderSuccessModal'
 function Home({ categorys, products }) {
   const router = useRouter()
   const { No } = router.query
@@ -20,6 +21,8 @@ function Home({ categorys, products }) {
   const [car, setcar] = useState({})
   const [carImageState, setcarImageState] = useState('empty')
   const [showShoppingCar, setshowShoppingCar] = useState(false)
+  const [showConfirmModal, setshowConfirmModal] = useState(false)
+  const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
   const selectCategory = (target) => {
     setselectedcategory(target)
     setproductlist(products.filter((x) => x.categoryid === target.categoryid))
@@ -77,6 +80,23 @@ function Home({ categorys, products }) {
   useEffect(() => {
     setcarImageState(Object.values(car).some((x) => x.count > 0) ? 'fill' : 'empty')
   }, [car])
+
+  const confirmModalCancel = () => {
+    setshowConfirmModal(false)
+  }
+  const confirmModalConfirm = () => {
+    setshowConfirmModal(false)
+    setshowOrderSuccessModal(true)
+    setTimeout(() => {
+      orderSuccessModalClose()
+    }, 3000)
+  }
+  const orderSuccessModalClose = () => {
+    removeCarItem(-1)
+    setshowShoppingCar(false)
+    setshowOrderSuccessModal(false)
+    setshowproduct(false)
+  }
   return (
     <div className="flex h-svh ">
       {showNotificationModal && <NotificationModal onClose={handleClose} />}
@@ -157,7 +177,21 @@ function Home({ categorys, products }) {
           setshowShoppingCar(false)
         }}
         removeCarItem={removeCarItem}
+        checkout={() => {
+          setshowConfirmModal(true)
+        }}
       ></ShoppingCar>
+
+      {showConfirmModal && (
+        <ConfirmModal
+          text={'確認結帳?'}
+          canceltext={'再想一下'}
+          confirmtext={'確定'}
+          onCancel={confirmModalCancel}
+          onConfirm={confirmModalConfirm}
+        ></ConfirmModal>
+      )}
+      {showOrderSuccessModal && <OrderSuccessModal></OrderSuccessModal>}
     </div>
   )
 }

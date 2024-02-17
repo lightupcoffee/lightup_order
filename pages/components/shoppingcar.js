@@ -1,12 +1,10 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import CButton from './cbutton'
-import ConfirmModal from './confirmModal'
-import OrderSuccessModal from './orderSuccessModal'
-const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
+
+const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar, checkout }) => {
   const [totalAmount, settotalAmount] = useState(0)
-  const [showConfirmModal, setshowConfirmModal] = useState(false)
-  const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
+
   const [trashiconState, settrashiconState] = useState(null)
   useEffect(() => {
     const total = car.reduce((res, item) => {
@@ -21,20 +19,9 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
   }
   const linepay = () => {}
   const cashpay = () => {
-    setshowConfirmModal(true)
+    checkout()
   }
-  const confirmModalCancel = () => {
-    setshowConfirmModal(false)
-  }
-  const confirmModalConfirm = () => {
-    setshowConfirmModal(false)
-    setshowOrderSuccessModal(true)
-  }
-  const orderSuccessModalClose = () => {
-    setshowOrderSuccessModal(false)
-    onClose()
-    removeCarItem(-1)
-  }
+
   return (
     <div
       className={`absolute right-0 top-0  h-full w-72  transition-all duration-300 ${showShoppingCar ? 'translate-x-0' : '-translate-x-[-18rem]'}`}
@@ -158,16 +145,6 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
           </div>
         </div>
       </div>
-      {showConfirmModal && (
-        <ConfirmModal
-          text={'確認結帳?'}
-          canceltext={'再想一下'}
-          confirmtext={'確定'}
-          onCancel={confirmModalCancel}
-          onConfirm={confirmModalConfirm}
-        ></ConfirmModal>
-      )}
-      {showOrderSuccessModal && <OrderSuccessModal onClose={orderSuccessModalClose}></OrderSuccessModal>}
     </div>
   )
 }
