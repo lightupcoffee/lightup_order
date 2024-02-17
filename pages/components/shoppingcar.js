@@ -7,7 +7,7 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
   const [totalAmount, settotalAmount] = useState(0)
   const [showConfirmModal, setshowConfirmModal] = useState(false)
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
-  const [trashiconState, settrashiconState] = useState(false)
+  const [trashiconState, settrashiconState] = useState(null)
   useEffect(() => {
     const total = car.reduce((res, item) => {
       res += item.count * item.product.price
@@ -27,8 +27,6 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
     setshowConfirmModal(false)
   }
   const confirmModalConfirm = () => {
-    console.log('showConfirmModal', showConfirmModal)
-    console.log('showOrderSuccessModal', showOrderSuccessModal)
     setshowConfirmModal(false)
     setshowOrderSuccessModal(true)
   }
@@ -121,10 +119,10 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
               >
                 <div className="h3">
                   <div>{item.product.name}</div>
-                  <div className="c1 ">NT${item.product.price}</div>
+                  <div className="c1 ">NT ${item.product.price}</div>
                 </div>
                 <div className="ml-auto flex items-center ">
-                  <span className="h3">x</span>
+                  <span className="c1">x &nbsp; </span>
                   <b className=" h1">{item.count}</b>
                 </div>
                 <div
@@ -132,15 +130,15 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
                   onClick={() => {
                     removeCarItem(item.product.productid)
                   }}
-                  onTouchStart={() => settrashiconState(true)}
-                  onTouchEnd={() => settrashiconState(false)}
-                  onMouseOver={() => settrashiconState(true)}
-                  onMouseDown={() => settrashiconState(true)}
-                  onMouseUp={() => settrashiconState(false)}
-                  onMouseLeave={() => settrashiconState(false)}
+                  onTouchStart={() => settrashiconState(item.product.productid)}
+                  onTouchEnd={() => settrashiconState(null)}
+                  onMouseOver={() => settrashiconState(item.product.productid)}
+                  onMouseDown={() => settrashiconState(item.product.productid)}
+                  onMouseUp={() => settrashiconState(null)}
+                  onMouseLeave={() => settrashiconState(null)}
                 >
                   <Image
-                    src={`/images/trash_${trashiconState ? 'press' : 'default'}.svg`}
+                    src={`/images/trash_${trashiconState === item.product.productid ? 'press' : 'default'}.svg`}
                     alt="delete"
                     width={24}
                     height={24}
@@ -149,10 +147,10 @@ const ShoppingCar = ({ car, no, onClose, removeCarItem, showShoppingCar }) => {
               </div>
             ))}
         </div>
-        <div className="px-5 py-3 ">
+        <div className="px-5  ">
           <div className="h1 flex  justify-between py-3">
             <span>Total</span>
-            <span>NT${totalAmount}</span>
+            <span>NT ${totalAmount}</span>
           </div>
           <div className="mt-5 flex flex-col gap-2">
             <CButton text={'Line Pay'} mode={'secondary'} click={linepay}></CButton>

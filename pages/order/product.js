@@ -3,12 +3,6 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 function Product({ products, category, car, editcar, onBack, showShoppingCar }) {
-  const [currentitem, setcurrentitem] = useState(false)
-  useEffect(() => {
-    if (showShoppingCar) {
-      setcurrentitem(null)
-    }
-  }, [showShoppingCar])
   return (
     <div className="flex h-full  flex-col">
       <div className="item-center flex cursor-pointer border-b-2 border-current py-4 pt-9" onClick={onBack}>
@@ -17,20 +11,18 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
         </span>
         <div className="h1 "> {category?.name}</div>
       </div>
-      <div className="hide-scrollbar flex-1 overflow-auto" style={{ maxHeight: '500px' }}>
+      <div className="hide-scrollbar flex-1 overflow-auto">
         {products &&
           products.map((product) => (
             <div
               onClick={() => {
-                if (currentitem !== product.productid) {
-                  setcurrentitem(product.productid)
-                } else {
-                  setcurrentitem(null)
+                if (!car[product.productid]) {
+                  editcar({ type: 'plus', product: product })
                 }
               }}
               key={product.productid}
               className={` mt-5 flex w-full cursor-pointer items-center justify-between rounded-7xl border border-current px-6 py-3 text-start 
-              ${(car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid ? 'bg-primary text-secondary' : ''} `}
+              ${car[product.productid] && car[product.productid]?.count > 0 ? 'bg-primary text-secondary' : ''} `}
             >
               <div>
                 <div className="h2">{product.name} </div>
@@ -38,7 +30,7 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                 <div className="c2 mt-2">NT ${product.price} </div>
               </div>
 
-              {((car[product.productid] && car[product.productid]?.count > 0) || currentitem === product.productid) && (
+              {car[product.productid] && car[product.productid]?.count > 0 ? (
                 <div className="item-center flex gap-2   ">
                   <Image
                     className="cursor-pointer "
@@ -52,7 +44,7 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                     height={24}
                   />
 
-                  <div className="h2 my-auto text-center">{car[product.productid]?.count ?? 0}</div>
+                  <div className="h2 my-auto w-8 text-center ">{car[product.productid]?.count ?? 0}</div>
 
                   <Image
                     className="cursor-pointer "
@@ -65,6 +57,10 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                     width={24}
                     height={24}
                   />
+                </div>
+              ) : (
+                <div>
+                  <Image src="/images/plus_bg.svg" alt="plus" width={32} height={24} />
                 </div>
               )}
             </div>

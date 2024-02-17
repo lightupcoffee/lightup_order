@@ -9,10 +9,12 @@
   --color-secondary-500: #19191980;
 }
 
-body {
+html body {
   color: var(--color-primary);
   background: var(--color-secondary);
-  overflow-x: hidden;
+  overflow: hidden;
+  width: 100%;
+  position: fixed;
 }
 
 @layer utilities {
@@ -41,7 +43,8 @@ body {
 
 .h3 {
   /*Font size=16px Letter spacing = 1% Line height = 20 px*/
-  @apply text-base font-black leading-5 tracking-widest;
+  @apply text-base font-black leading-5;
+  letter-spacing: 0.01em;
 }
 
 .c1 {

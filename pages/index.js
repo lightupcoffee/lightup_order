@@ -74,17 +74,20 @@ function Home({ categorys, products }) {
     }
   }
 
-  const openCar = () => {
-    setshowShoppingCar(true)
-  }
   useEffect(() => {
     setcarImageState(Object.values(car).some((x) => x.count > 0) ? 'fill' : 'empty')
   }, [car])
   return (
-    <div className=" flex h-svh ">
+    <div className="flex h-svh ">
       {showNotificationModal && <NotificationModal onClose={handleClose} />}
       <div
-        className={`relative flex h-svh w-full flex-row transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem]' : ''}`}
+        onClick={(e) => {
+          if (showShoppingCar) {
+            e.stopPropagation() // 阻止事件冒泡
+            setshowShoppingCar(false)
+          }
+        }}
+        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem]' : ''}`}
       >
         <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
           <div className="flex justify-between pb-4 pt-9">
