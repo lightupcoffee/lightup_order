@@ -123,7 +123,7 @@ function Home({ categorys, products }) {
             setshowShoppingCar(false)
           }
         }}
-        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? 'sm:-translate-x-[18rem] md:-translate-x-0' : ''}`}
+        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem] xl:-translate-x-0' : ''}`}
       >
         <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
           <div className="flex justify-between pb-4 pt-9">
