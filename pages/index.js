@@ -59,6 +59,9 @@ function Home({ categorys, products }) {
         if (newCar[key].count >= 1) {
           newCar[key].count -= 1
         }
+        if (newCar[key].count === 0) {
+          delete newCar[key]
+        }
         break
     }
     setcar(newCar)
