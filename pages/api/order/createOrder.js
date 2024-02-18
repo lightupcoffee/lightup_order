@@ -34,7 +34,7 @@ export default async function createOrder(req, res) {
           `INSERT INTO lightup."Order" (totalamount, status, tableid, createtime)
          VALUES ($1, $2, $3, NOW())
          RETURNING orderid`,
-          [totalAmount, 'pending', tableid], // 這些值根據實際情況動態替換
+          [totalAmount, 0, tableid], // 這些值根據實際情況動態替換
         )
 
         const orderId = orderResult.rows[0].orderid
