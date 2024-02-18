@@ -83,8 +83,10 @@ function Home({ categorys, products }) {
     setshowConfirmModal(false)
   }
   const confirmModalConfirm = async () => {
+    if (!tableid) return
     setshowConfirmModal(false)
     setshowOrderSuccessModal(true)
+
     await axios({
       method: 'post',
       url: '/order/createOrder',
@@ -177,7 +179,9 @@ function Home({ categorys, products }) {
           <div className="c1  w-full shrink-0  bg-secondary py-4">
             <div className="  flex  items-center justify-between  ">
               <div>CHANGHUA</div>
-              <div>IG : Light.up_coffee</div>
+              <a href="https://www.instagram.com/light.up_coffee?igsh=MTlicGh5dzZ3bG9kcQ==" target="_blank">
+                IG : Light.up_coffee
+              </a>
             </div>
           </div>
         </div>
