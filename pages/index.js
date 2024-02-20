@@ -86,7 +86,7 @@ function Home({ categorys, products }) {
     setshowConfirmModal(false)
   }
   const confirmModalConfirm = async () => {
-    if (!tableid) return
+    if (!tableid || Object.keys(car).length == 0) return
     setshowConfirmModal(false)
     setshowOrderSuccessModal(true)
 
