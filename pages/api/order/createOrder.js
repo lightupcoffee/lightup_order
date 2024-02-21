@@ -28,28 +28,17 @@ export default async function createOrder(req, res) {
       totalAmount += product.price * car[key].count
       return orderitem
     })
-
+    console.log('json', JSON.stringify(orderitemlist))
     const addOrderAndItems = async () => {
       try {
         await client.query('BEGIN')
 
         //建立訂單並回傳訂單id
-        const orderResult = await client.query(
+        await client.query(
           `INSERT INTO lightup."Order" (totalamount, status, tableid, createtime,item)
-         VALUES ($1, $2, $3, NOW(),$4)
-         RETURNING orderid`,
-          [totalAmount, 0, tableid, JSON.stringify(orderitemlist)], // 這些值根據實際情況動態替換
+         VALUES ('${totalAmount}', 0, '${tableid}', NOW(),'${JSON.stringify(orderitemlist)}')`,
         )
 
-        // const orderId = orderResult.rows[0].orderid
-
-        // //加入orderitem
-        // const itemsQuery = {
-        //   text: `INSERT INTO lightup."OrderItems" (orderid, productid, quantity, subtotal)
-        //        VALUES ${orderitemlist.map((_, i) => `($1, $${i * 3 + 2}, $${i * 3 + 3}, $${i * 3 + 4})`).join(', ')}`,
-        //   values: [orderId, ...orderitemlist.flatMap((item) => [item.productid, item.quantity, item.subtotal])],
-        // }
-        // await client.query(itemsQuery)
         await client.query('COMMIT')
       } catch (e) {
         await client.query('ROLLBACK')
