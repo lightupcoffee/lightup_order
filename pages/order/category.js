@@ -1,7 +1,5 @@
 // pages/index.js
-import axios from '../../utils/axiosInstance'
-import Image from 'next/image'
-import { useEffect, useState } from 'react' // 添加 useState 和 useEffect 导入
+import Image from 'next/image' // 添加 useState 和 useEffect 导入
 
 function Category({ categorys, onSelect }) {
   return (
@@ -12,7 +10,7 @@ function Category({ categorys, onSelect }) {
             <li
               key={category.categoryid}
               onClick={() => onSelect(category)} // 修复这里的 onClick
-              className="h1 group relative flex cursor-pointer  justify-between border-b border-current pb-3  pt-9 text-primary"
+              className="h1 group relative flex cursor-pointer  justify-between border-b border-current pb-3  pt-6 text-primary"
             >
               <div>{category.name}</div>
               <div>

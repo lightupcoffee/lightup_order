@@ -24,7 +24,8 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
 
   return (
     <div
-      className={`absolute right-0 top-0  h-full w-72  transition-all duration-300 ${showShoppingCar ? 'translate-x-0' : '-translate-x-[-18rem]'}`}
+      // className={`absolute right-0 top-0  h-full w-72  transition-all duration-300 ${showShoppingCar ? 'translate-x-0' : '-translate-x-[-18rem]'}`}
+      className={`fixed right-0 top-0 z-10 h-full w-72 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
       onClick={onClose}
     >
       <div

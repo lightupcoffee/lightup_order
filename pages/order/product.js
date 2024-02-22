@@ -5,13 +5,13 @@ import Image from 'next/image'
 function Product({ products, category, car, editcar, onBack, showShoppingCar }) {
   return (
     <div className="flex h-full  flex-col">
-      <div className="item-center flex cursor-pointer border-b-2 border-current py-4 pt-9" onClick={onBack}>
+      <div className="item-center flex cursor-pointer border-b-2 border-current py-4 pt-6" onClick={onBack}>
         <span className="my-auto">
           <Image src="/images/play.svg" alt="back" width={18} height={18} />
         </span>
         <div className="h1 "> {category?.name}</div>
       </div>
-      <div className="hide-scrollbar flex-1 overflow-auto">
+      <div className="hide-scrollbar flex-1 ">
         {products &&
           products.map((product) => (
             <div

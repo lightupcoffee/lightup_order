@@ -32,7 +32,6 @@ function Home({ categorys, products }) {
 
   useEffect(() => {
     const hasVisited = sessionStorage.getItem('hasVisited')
-    console.log('hasVisited', hasVisited)
     if (!hasVisited) {
       setshowNotificationModal(true)
       sessionStorage.setItem('hasVisited', 'true')
@@ -117,7 +116,7 @@ function Home({ categorys, products }) {
     setshowproduct(false)
   }
   return (
-    <div className="flex h-svh ">
+    <div className=" relative  " style={{ minHeight: 'calc(100vh + 10px)' }}>
       {showNotificationModal && <NotificationModal onClose={handleClose} />}
       <div
         onClick={(e) => {
@@ -126,10 +125,10 @@ function Home({ categorys, products }) {
             setshowShoppingCar(false)
           }
         }}
-        className={`relative flex h-svh w-full flex-row  transition-transform duration-300 ${showShoppingCar ? '-translate-x-[18rem] xl:-translate-x-0' : ''}`}
+        className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-72' : ''}`}
       >
         <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
-          <div className="flex justify-between pb-4 pt-9">
+          <div className="flex justify-between py-2 pb-4">
             <div className="cursor-pointer">
               <Image
                 src="/images/hamburger.svg" // 圖片的路徑
@@ -159,12 +158,12 @@ function Home({ categorys, products }) {
             <Image
               src="/images/logo_title.svg" // 圖片的路徑
               alt="star icon" // 圖片描述
-              width={335} // 圖片的寬度
+              width={340} // 圖片的寬度
               height={100} // 圖片的高度
-              layout="responsive" // 圖片的佈局方式
+              //layout="responsive" // 圖片的佈局方式
             />
           </div>
-          <div className="w-full max-w-2xl flex-1 overflow-auto sm:px-6 lg:max-w-7xl lg:px-8">
+          <div className="w-full max-w-2xl flex-1  sm:px-6 lg:max-w-7xl lg:px-8">
             {!showNotificationModal && !showproduct && (
               <Category categorys={categorys} onSelect={selectCategory}></Category>
             )}
@@ -214,6 +213,27 @@ function Home({ categorys, products }) {
       )}
       {showOrderSuccessModal && <OrderSuccessModal></OrderSuccessModal>}
     </div>
+    // <div className="relative min-h-screen">
+    //   {/* 主內容 */}
+    //   <div className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-64' : ''}`}>
+    //     {/* 主頁面內容 */}
+    //     <button className="bg-blue-500 p-2 text-white" onClick={() => setshowShoppingCar(!showShoppingCar)}>
+    //       切換購物車
+    //     </button>
+    //     123132123daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    //   </div>
+
+    //   {/* 側邊欄購物車 */}
+    //   <div
+    //     className={`fixed right-0 top-0 z-10 h-full w-64 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
+    //   >
+    //     {/* 購物車內容 */}
+    //     購物車內容
+    //     <button className="bg-red-500 p-2 text-white" onClick={() => setshowShoppingCar(false)}>
+    //       關閉
+    //     </button>
+    //   </div>
+    // </div>
   )
 }
 

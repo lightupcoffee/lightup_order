@@ -8,14 +8,21 @@
   --color-secondary: #191919;
   --color-secondary-500: #19191980;
 }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important;
+}
 
 html body {
   color: var(--color-primary);
   background: var(--color-secondary);
-  overflow: hidden;
   width: 100%;
-  position: fixed;
   user-select: none;
+
+  scrollbar-width: none; /* 對於Firefox */
+  -ms-overflow-style: none; /* 對於IE和Edge */
+
+  -webkit-overflow-scrolling: touch; /* 用於觸摸設備的滑動滾動 */
 }
 
 @layer utilities {
