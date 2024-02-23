@@ -127,41 +127,43 @@ function Home({ categorys, products }) {
         }}
         className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-72' : ''}`}
       >
-        <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
-          <div className="flex justify-between py-2 pb-4">
-            <div className="cursor-pointer">
+        <div className={`container mx-auto flex  flex-1 transform flex-col px-5  lg:max-w-7xl `}>
+          <div className="sticky top-0 bg-secondary pb-6">
+            <div className="flex justify-between py-2 pb-4">
+              <div className="cursor-pointer">
+                <Image
+                  src="/images/hamburger.svg" // 圖片的路徑
+                  alt="hamburger" // 圖片描述
+                  width={36} // 圖片的寬度
+                  height={36} // 圖片的高度
+                  layout="responsive" // 圖片的佈局方式
+                />
+              </div>
+              <div
+                onClick={() => {
+                  setshowShoppingCar(!showShoppingCar)
+                }}
+                className="cursor-pointer"
+              >
+                <Image
+                  // src="/images/car.svg" // 圖片的路徑
+                  src={`/images/shoppingcar_${carImageState}.svg`} // 圖片的路徑
+                  alt="購物車" // 圖片描述
+                  width={36} // 圖片的寬度
+                  height={36} // 圖片的高度
+                  layout="responsive" // 圖片的佈局方式
+                />
+              </div>
+            </div>
+            <div className="mx-auto max-w-2xl ">
               <Image
-                src="/images/hamburger.svg" // 圖片的路徑
-                alt="hamburger" // 圖片描述
-                width={36} // 圖片的寬度
-                height={36} // 圖片的高度
+                src="/images/logo_title.svg" // 圖片的路徑
+                alt="star icon" // 圖片描述
+                width={340} // 圖片的寬度
+                height={100} // 圖片的高度
                 layout="responsive" // 圖片的佈局方式
               />
             </div>
-            <div
-              onClick={() => {
-                setshowShoppingCar(!showShoppingCar)
-              }}
-              className="cursor-pointer"
-            >
-              <Image
-                // src="/images/car.svg" // 圖片的路徑
-                src={`/images/shoppingcar_${carImageState}.svg`} // 圖片的路徑
-                alt="購物車" // 圖片描述
-                width={36} // 圖片的寬度
-                height={36} // 圖片的高度
-                layout="responsive" // 圖片的佈局方式
-              />
-            </div>
-          </div>
-          <div className="mx-auto max-w-2xl ">
-            <Image
-              src="/images/logo_title.svg" // 圖片的路徑
-              alt="star icon" // 圖片描述
-              width={340} // 圖片的寬度
-              height={100} // 圖片的高度
-              //layout="responsive" // 圖片的佈局方式
-            />
           </div>
           <div className="w-full max-w-2xl flex-1  sm:px-6 lg:max-w-7xl lg:px-8">
             {!showNotificationModal && !showproduct && (
