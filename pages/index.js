@@ -128,7 +128,7 @@ function Home({ categorys, products }) {
         className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-72' : ''}`}
       >
         <div className={`container mx-auto flex  flex-1 transform flex-col px-5  lg:max-w-7xl `}>
-          <div className="sticky top-0 bg-secondary pb-6">
+          <div className="sticky top-0 bg-secondary pb-8">
             <div className="flex justify-between py-2 pb-4">
               <div className="cursor-pointer">
                 <Image
@@ -180,7 +180,7 @@ function Home({ categorys, products }) {
               ></Product>
             )}
           </div>
-          <div className="c1  w-full shrink-0  bg-secondary py-4">
+          <div className="c1  sticky bottom-0  w-full shrink-0 bg-secondary py-4">
             <div className="  flex  items-center justify-between  ">
               <div>CHANGHUA</div>
               <a href="https://www.instagram.com/light.up_coffee?igsh=MTlicGh5dzZ3bG9kcQ==" target="_blank">
