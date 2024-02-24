@@ -21,6 +21,36 @@ function Home({ categorys, products }) {
   const [showShoppingCar, setshowShoppingCar] = useState(false)
   const [showConfirmModal, setshowConfirmModal] = useState(false)
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
+
+  //#region 滑動關閉購物車
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
+  const [test, settest] = useState(0)
+
+  // 最小滑動距離
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null) // 當新的滑動動作開始時，清除之前的touchEnd
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    // 確保滑動距離足夠長才觸發關閉事件
+    settest(touchStart - touchEnd)
+    if (touchEnd !== null && Math.abs(touchStart - touchEnd) > minSwipeDistance) {
+      // 向左滑動
+      const val = touchStart - touchEnd
+
+      setshowShoppingCar(val > 0) // 你的關閉購物車方法
+    }
+  }
+  //#endregion 滑動關閉購物車
+
   const selectCategory = (target) => {
     setselectedcategory(target)
     setproductlist(products.filter((x) => x.categoryid === target.categoryid))
@@ -122,8 +152,12 @@ function Home({ categorys, products }) {
   }
   return (
     <div className=" relative  " style={{ minHeight: 'calc(100vh + 10px)' }}>
+      {test}
       {showNotificationModal && <NotificationModal onClose={handleClose} />}
       <div
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
         onClick={(e) => {
           if (showShoppingCar) {
             e.stopPropagation() // 阻止事件冒泡
