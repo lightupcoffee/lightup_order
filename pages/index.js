@@ -149,7 +149,6 @@ function Home({ categorys, products }) {
   }
   return (
     <div className=" relative  " style={{ minHeight: 'calc(100vh + 10px)' }}>
-      {test}
       {showNotificationModal && <NotificationModal onClose={handleClose} />}
       <div
         onTouchStart={onTouchStart}
