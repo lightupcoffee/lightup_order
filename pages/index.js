@@ -31,6 +31,11 @@ function Home({ categorys, products }) {
   }
 
   useEffect(() => {
+    console.log(tableid)
+    if (!tableid) {
+      router.push('./noTableId')
+      return
+    }
     const hasVisited = sessionStorage.getItem('hasVisited')
     if (!hasVisited) {
       setshowNotificationModal(true)
@@ -125,7 +130,7 @@ function Home({ categorys, products }) {
             setshowShoppingCar(false)
           }
         }}
-        className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-72' : ''}`}
+        className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-72 xl:-translate-x-0' : ''}`}
       >
         <div className={`container mx-auto flex h-svh flex-1 transform flex-col px-5  lg:max-w-7xl `}>
           <div className="sticky top-0 bg-secondary pb-6">
@@ -215,27 +220,6 @@ function Home({ categorys, products }) {
       )}
       {showOrderSuccessModal && <OrderSuccessModal></OrderSuccessModal>}
     </div>
-    // <div className="relative min-h-screen">
-    //   {/* 主內容 */}
-    //   <div className={`transition-transform duration-500 ${showShoppingCar ? '-translate-x-64' : ''}`}>
-    //     {/* 主頁面內容 */}
-    //     <button className="bg-blue-500 p-2 text-white" onClick={() => setshowShoppingCar(!showShoppingCar)}>
-    //       切換購物車
-    //     </button>
-    //     123132123daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    //   </div>
-
-    //   {/* 側邊欄購物車 */}
-    //   <div
-    //     className={`fixed right-0 top-0 z-10 h-full w-64 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
-    //   >
-    //     {/* 購物車內容 */}
-    //     購物車內容
-    //     <button className="bg-red-500 p-2 text-white" onClick={() => setshowShoppingCar(false)}>
-    //       關閉
-    //     </button>
-    //   </div>
-    // </div>
   )
 }
 

@@ -25,7 +25,7 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
   return (
     <div
       // className={`absolute right-0 top-0  h-full w-72  transition-all duration-300 ${showShoppingCar ? 'translate-x-0' : '-translate-x-[-18rem]'}`}
-      className={`fixed right-0 top-0 z-10 h-full w-72 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
+      className={`fixed right-0 top-0  h-full w-72 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
       onClick={onClose}
     >
       <div
@@ -79,8 +79,8 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
             <span>NT ${totalAmount}</span>
           </div>
           <div className="mt-5 flex flex-col gap-2">
-            <CButton text={'Line Pay'} mode={'secondary'} click={linepay}></CButton>
-            <CButton text={'現金結帳'} mode={'secondary'} click={cashpay}></CButton>
+            <CButton text={'Line Pay'} mode={'secondary'} disable={true} click={linepay}></CButton>
+            <CButton text={'現金結帳'} mode={'secondary'} disable={!car || car.length <= 0} click={cashpay}></CButton>
           </div>
         </div>
       </div>
