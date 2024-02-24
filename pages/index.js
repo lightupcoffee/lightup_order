@@ -25,7 +25,6 @@ function Home({ categorys, products }) {
   //#region 滑動關閉購物車
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
-  const [test, settest] = useState(0)
 
   // 最小滑動距離
   const minSwipeDistance = 50
@@ -41,7 +40,6 @@ function Home({ categorys, products }) {
 
   const onTouchEnd = () => {
     // 確保滑動距離足夠長才觸發關閉事件
-    settest(touchStart - touchEnd)
     if (touchEnd !== null && Math.abs(touchStart - touchEnd) > minSwipeDistance) {
       // 向左滑動
       const val = touchStart - touchEnd
@@ -61,7 +59,6 @@ function Home({ categorys, products }) {
   }
 
   useEffect(() => {
-    console.log(tableid)
     if (!tableid) {
       router.push('./noTableId')
       return
