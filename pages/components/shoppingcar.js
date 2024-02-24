@@ -3,8 +3,32 @@ import React, { useState, useEffect } from 'react'
 import CButton from './cbutton'
 
 const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, checkout }) => {
-  const [totalAmount, settotalAmount] = useState(0)
+  //#region 滑動關閉購物車
+  const [touchStart, setTouchStart] = useState(null)
+  const [touchEnd, setTouchEnd] = useState(null)
 
+  // 最小滑動距離
+  const minSwipeDistance = 50
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null) // 當新的滑動動作開始時，清除之前的touchEnd
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const onTouchEnd = () => {
+    // 確保滑動距離足夠長才觸發關閉事件
+    if (touchEnd - touchStart > minSwipeDistance) {
+      // 向左滑動
+      onClose() // 你的關閉購物車方法
+    }
+  }
+  //#endregion 滑動關閉購物車
+
+  const [totalAmount, settotalAmount] = useState(0)
   const [trashiconState, settrashiconState] = useState(null)
   useEffect(() => {
     const total = car.reduce((res, item) => {
@@ -24,6 +48,9 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
 
   return (
     <div
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
       // className={`absolute right-0 top-0  h-full w-72  transition-all duration-300 ${showShoppingCar ? 'translate-x-0' : '-translate-x-[-18rem]'}`}
       className={`fixed right-0 top-0  h-full w-72 bg-white shadow-xl transition-transform duration-500 ${showShoppingCar ? 'translate-x-0' : 'translate-x-full'}`}
       onClick={onClose}

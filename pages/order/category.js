@@ -14,7 +14,7 @@ function Category({ categorys, onSelect }) {
             >
               <div>{category.name}</div>
               <div>
-                <Image src="/images/star.svg" alt="star" width={36} height={36} layout="responsive" />
+                <Image src="/images/star.svg" alt="star" width={36} height={36} />
               </div>
             </li>
           ))}

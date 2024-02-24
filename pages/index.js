@@ -141,7 +141,6 @@ function Home({ categorys, products }) {
                   alt="hamburger" // 圖片描述
                   width={36} // 圖片的寬度
                   height={36} // 圖片的高度
-                  layout="responsive" // 圖片的佈局方式
                 />
               </div>
               <div
@@ -156,17 +155,16 @@ function Home({ categorys, products }) {
                   alt="購物車" // 圖片描述
                   width={36} // 圖片的寬度
                   height={36} // 圖片的高度
-                  layout="responsive" // 圖片的佈局方式
                 />
               </div>
             </div>
             <div className="mx-auto max-w-2xl ">
               <Image
+                className="mx-auto"
                 src="/images/logo_title.svg" // 圖片的路徑
                 alt="star icon" // 圖片描述
                 width={340} // 圖片的寬度
                 height={100} // 圖片的高度
-                layout="responsive" // 圖片的佈局方式
               />
             </div>
           </div>
