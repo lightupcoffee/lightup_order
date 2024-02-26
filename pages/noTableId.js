@@ -1,8 +1,4 @@
-// pages/ProductList.js
-
 export default function NotableId() {
-  // 實現新增、修改和刪除功能...
-
   return (
     // <div className="fixed inset-0 bg-primary-500 transition-opacity">
     //   <div className="h1 fixed left-1/2  top-1/3 w-96 max-w-full -translate-x-1/2 -translate-y-1/2 transform rounded-4xl bg-secondary px-4 py-6 text-center">

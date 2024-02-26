@@ -1,8 +1,7 @@
 // pages/index.js
-import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 
-function Product({ products, category, car, editcar, onBack, showShoppingCar }) {
+function Product({ products, category, car, editcar, onBack }) {
   return (
     <div className="flex h-full  flex-col ">
       <div className="item-center flex cursor-pointer border-b-2 border-current pb-4 " onClick={onBack}>
@@ -42,6 +41,7 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                     alt="minus"
                     width={24}
                     height={24}
+                    priority={true}
                   />
 
                   <div className="h2 my-auto w-8 text-center ">{car[product.productid]?.count ?? 0}</div>
@@ -56,11 +56,12 @@ function Product({ products, category, car, editcar, onBack, showShoppingCar }) 
                     alt="plus"
                     width={24}
                     height={24}
+                    priority={true}
                   />
                 </div>
               ) : (
                 <div>
-                  <Image src="/images/plus_bg.svg" alt="plus" width={32} height={24} />
+                  <Image src="/images/plus_bg.svg" alt="plus" width={32} height={24} priority={true} />
                 </div>
               )}
             </div>

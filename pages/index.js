@@ -10,8 +10,9 @@ import ShoppingCar from './components/shoppingcar'
 import ConfirmModal from './components/confirmModal'
 import OrderSuccessModal from './components/orderSuccessModal'
 function Home({ categorys, products }) {
+  const paymenttypelist = { cash: '現金付款', linepay: 'Line Pay' }
   const router = useRouter()
-  const { tableid } = router.query
+  const { tableid, paysuccess } = router.query
   const [showNotificationModal, setshowNotificationModal] = useState(false)
   const [showproduct, setshowproduct] = useState(false)
   const [productlist, setproductlist] = useState([])
@@ -20,7 +21,9 @@ function Home({ categorys, products }) {
   const [carImageState, setcarImageState] = useState('empty')
   const [showShoppingCar, setshowShoppingCar] = useState(false)
   const [showConfirmModal, setshowConfirmModal] = useState(false)
+  const [createOrderLoad, setcreateOrderLoad] = useState(false)
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
+  const [paymenttype, setpaymenttype] = useState(paymenttypelist.cash)
 
   //#region 滑動關閉購物車
   const [touchStart, setTouchStart] = useState(null)
@@ -60,13 +63,20 @@ function Home({ categorys, products }) {
 
   useEffect(() => {
     if (!tableid) {
-      router.push('./noTableId')
+      router.push('./notableId')
       return
     }
-    const hasVisited = sessionStorage.getItem('hasVisited')
-    if (!hasVisited) {
-      setshowNotificationModal(true)
-      sessionStorage.setItem('hasVisited', 'true')
+    if (paysuccess) {
+      setshowOrderSuccessModal(true)
+      setTimeout(() => {
+        orderSuccessModalClose()
+      }, 3000)
+    } else {
+      const hasVisited = sessionStorage.getItem('hasVisited')
+      if (!hasVisited) {
+        setshowNotificationModal(true)
+        sessionStorage.setItem('hasVisited', 'true')
+      }
     }
   }, [])
   const handleClose = () => {
@@ -118,9 +128,7 @@ function Home({ categorys, products }) {
   }
   const confirmModalConfirm = async () => {
     if (!tableid || Object.keys(car).length == 0) return
-    setshowConfirmModal(false)
-    setshowOrderSuccessModal(true)
-
+    setcreateOrderLoad(true)
     await axios({
       method: 'post',
       url: '/order/createOrder',
@@ -128,24 +136,49 @@ function Home({ categorys, products }) {
       data: {
         car: car,
         tableid: tableid,
+        paymenttype: paymenttype,
       },
     })
-      .then((res) => {
-        console.log('success')
+      .then(async (res) => {
+        if (paymenttype === paymenttypelist.linepay) {
+          await linepay(res.data)
+        }
+        setshowConfirmModal(false)
+        setshowOrderSuccessModal(true)
+        setTimeout(() => {
+          orderSuccessModalClose()
+        }, 3000)
       })
       .catch((error) => {
         console.error('Failed to fetch data:', error)
       })
-
-    setTimeout(() => {
-      orderSuccessModalClose()
-    }, 3000)
+      .finally(() => {
+        setcreateOrderLoad(false)
+      })
   }
+
   const orderSuccessModalClose = () => {
     removeCarItem(-1)
     setshowShoppingCar(false)
     setshowOrderSuccessModal(false)
     setshowproduct(false)
+  }
+
+  const linepay = async (order) => {
+    await axios({
+      method: 'post',
+      url: '/pay/linepayRequest',
+      //API要求的資料
+      data: { order: order },
+    })
+      .then((res) => {
+        console.log('linepayRequest', res)
+        const paymentUrl = res.data.info.paymentUrl.web // 或根據需要使用app URL
+        window.location.href = paymentUrl // 在網頁中重定向用戶
+      })
+      .catch((error) => {
+        console.error('Failed to fetch data:', error)
+      })
   }
   return (
     <div className=" relative  " style={{ minHeight: 'calc(100vh + 10px)' }}>
@@ -228,11 +261,13 @@ function Home({ categorys, products }) {
         showShoppingCar={showShoppingCar}
         car={Object.values(car)}
         tableid={tableid}
+        paymenttypelist={paymenttypelist}
         onClose={() => {
           setshowShoppingCar(false)
         }}
         removeCarItem={removeCarItem}
-        checkout={() => {
+        checkout={(type) => {
+          setpaymenttype(type)
           setshowConfirmModal(true)
         }}
       ></ShoppingCar>
@@ -244,6 +279,7 @@ function Home({ categorys, products }) {
           confirmtext={'確定'}
           onCancel={confirmModalCancel}
           onConfirm={confirmModalConfirm}
+          loading={createOrderLoad}
         ></ConfirmModal>
       )}
       {showOrderSuccessModal && <OrderSuccessModal></OrderSuccessModal>}

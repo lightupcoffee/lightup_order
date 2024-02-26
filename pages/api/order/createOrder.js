@@ -8,7 +8,7 @@ export default async function createOrder(req, res) {
       res.status(405).end(`Method ${req.method} Not Allowed`)
     }
 
-    const { car, tableid } = req.body
+    const { car, tableid, paymenttype } = req.body
     let totalAmount = 0
 
     //整理購物車資料
@@ -31,13 +31,14 @@ export default async function createOrder(req, res) {
     // 建立訂單並處理事務
     await client.query('BEGIN')
 
-    await client.query(
-      `INSERT INTO lightup."Order" (totalamount, status, tableid, createtime, item)
-       VALUES ('${totalAmount}', 0, '${tableid}', NOW(), '${JSON.stringify(orderitemlist)}')`,
+    const orderResult = await client.query(
+      `INSERT INTO lightup."Order" (totalamount, status, tableid, createtime,paymenttype, item)
+       VALUES ('${totalAmount}', 0, '${tableid}', NOW(),'${paymenttype}' ,'${JSON.stringify(orderitemlist)}')
+       RETURNING *`,
     )
-
     await client.query('COMMIT')
-    res.status(200).json({ success: true })
+    const order = orderResult.rows[0]
+    res.status(200).json(order)
   } catch (err) {
     console.log(err)
     await client.query('ROLLBACK')

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React, { useState, useEffect } from 'react'
 import CButton from './cbutton'
 
-const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, checkout }) => {
+const ShoppingCar = ({ car, tableid, paymenttypelist, onClose, removeCarItem, showShoppingCar, checkout }) => {
   //#region 滑動關閉購物車
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
@@ -40,10 +40,6 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
 
   const stopClick = (event) => {
     event.stopPropagation()
-  }
-  const linepay = () => {}
-  const cashpay = () => {
-    checkout()
   }
 
   return (
@@ -95,6 +91,7 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
                     alt="delete"
                     width={24}
                     height={24}
+                    priority={true}
                   />
                 </div>
               </div>
@@ -106,8 +103,18 @@ const ShoppingCar = ({ car, tableid, onClose, removeCarItem, showShoppingCar, ch
             <span>NT ${totalAmount}</span>
           </div>
           <div className="mt-5 flex flex-col gap-2">
-            <CButton text={'Line Pay'} mode={'secondary'} disable={true} click={linepay}></CButton>
-            <CButton text={'現金結帳'} mode={'secondary'} disable={!car || car.length <= 0} click={cashpay}></CButton>
+            <CButton
+              text={'Line Pay'}
+              mode={'secondary'}
+              disable={false}
+              click={() => checkout(paymenttypelist.linepay)}
+            ></CButton>
+            <CButton
+              text={'現金結帳'}
+              mode={'secondary'}
+              disable={!car || car.length <= 0}
+              click={() => checkout(paymenttypelist.cash)}
+            ></CButton>
           </div>
         </div>
       </div>
