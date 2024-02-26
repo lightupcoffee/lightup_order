@@ -17,7 +17,6 @@ function generateLinePayHeaders(channelId, channelSecretKey, uri, body) {
 
 export default async (req, res) => {
   const { transactionId, orderId } = req.body // 從請求中獲取交易ID和訂單ID
-  console.log(req.body)
   const client = await db.connect()
   const result = await client.query(`SELECT * FROM lightup."Order" where orderid =${orderId}`)
   const order = result.rows[0]
@@ -44,7 +43,6 @@ export default async (req, res) => {
   })
 
   const data = await response.json()
-  console.log(data)
   if (data.returnCode === '0000') {
     await client.query(
       `UPDATE  lightup."Order" SET transactionid=${transactionId}, paymenttime=NOW() , status=1 where orderid = ${orderId}`,

@@ -42,15 +42,9 @@ export default async (req, res) => {
       },
     ],
     redirectUrls: {
-      //confirmUrl: `${process.NEXT_PUBLIC_API_BASE_URL}?tableid=${tableid}&paysuccess=1`, //你的確認付款頁面URL
       confirmUrl: `${process.env.API_BASE_URL}/order/linepayconfirm?tableId=${order.tableid}`, //你的確認付款頁面URL
       cancelUrl: `${process.env.API_BASE_URL}?notableId`, //用戶取消付款後的重定向URL
     },
-    // options: {
-    //   display: {
-    //     checkConfirmUrlBrowser: true,
-    //   },
-    // },
   }
 
   // 生成請求標頭
@@ -64,7 +58,6 @@ export default async (req, res) => {
     headers,
     body: JSON.stringify(body),
   })
-  console.log('confirm', response)
   const data = await response.json()
   if (data.returnCode === '0000') {
     res.status(200).json(data)
