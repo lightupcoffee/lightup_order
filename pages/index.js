@@ -54,7 +54,7 @@ function Home({ categorys, products }) {
 
   const selectCategory = (target) => {
     setselectedcategory(target)
-    setproductlist(products.filter((x) => x.categoryid === target.categoryid))
+    setproductlist(products.filter((x) => x.categoryid === target.categoryid).sort((a, b) => a.sort - b.sort))
     setshowproduct(true)
   }
   const productBack = () => {
