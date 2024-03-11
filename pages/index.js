@@ -8,11 +8,11 @@ import Product from './order/product'
 import NotificationModal from './components/notificationModal'
 import ShoppingCar from './components/shoppingcar'
 import ConfirmModal from './components/confirmModal'
-import OrderSuccessModal from './components/orderSuccessModal'
+import Dialog from './components/dialog'
 function Home({ categorys, products }) {
   const paymenttypelist = { cash: '現金付款', linepay: 'Line Pay' }
   const router = useRouter()
-  const { tableid, paysuccess } = router.query
+  const { tableid, linepayerror } = router.query
   const [showNotificationModal, setshowNotificationModal] = useState(false)
   const [showproduct, setshowproduct] = useState(false)
   const [productlist, setproductlist] = useState([])
@@ -24,6 +24,7 @@ function Home({ categorys, products }) {
   const [createOrderLoad, setcreateOrderLoad] = useState(false)
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
   const [paymenttype, setpaymenttype] = useState(paymenttypelist.cash)
+  const [showLinePayErrorModal, setshowLinePayErrorModal] = useState(false)
 
   //#region 滑動關閉購物車
   const [touchStart, setTouchStart] = useState(null)
@@ -66,11 +67,20 @@ function Home({ categorys, products }) {
       router.push('./notableId')
       return
     }
-    if (paysuccess) {
-      setshowOrderSuccessModal(true)
+    if (linepayerror) {
+      setshowLinePayErrorModal(true)
       setTimeout(() => {
-        orderSuccessModalClose()
-      }, 3000)
+        //刪除linepayerror的query
+        router.replace(
+          {
+            pathname: router.pathname,
+            query: { tableid: tableid },
+          },
+          undefined,
+          { shallow: true },
+        ) // 使用shallow選項防止不必要
+        setshowLinePayErrorModal(false)
+      }, 5000)
     } else {
       const hasVisited = sessionStorage.getItem('hasVisited')
       if (!hasVisited) {
@@ -282,7 +292,38 @@ function Home({ categorys, products }) {
           loading={createOrderLoad}
         ></ConfirmModal>
       )}
-      {showOrderSuccessModal && <OrderSuccessModal></OrderSuccessModal>}
+
+      <Dialog isOpen={showOrderSuccessModal} top={'50%'}>
+        <div className="pb-2">
+          <Image
+            className="mx-auto"
+            src="/images/check-badge.svg"
+            alt="check-badge"
+            width={48}
+            height={48}
+            priority={true}
+          />
+        </div>
+        <p className="h1 mb-4">已收到訂單</p>
+        <div className="c2">
+          請稍待片刻
+          <br /> 稍後由服務人員至桌邊為您結帳
+        </div>
+      </Dialog>
+      <Dialog isOpen={showLinePayErrorModal} top={'50%'}>
+        <div className="pb-2">
+          <Image
+            className="mx-auto"
+            src="/images/check-error.svg"
+            alt="check-error"
+            width={48}
+            height={48}
+            priority={true}
+          />
+        </div>
+        <p className="h1 mb-4">付款失敗</p>
+        <div className="c2">請重新點餐</div>
+      </Dialog>
     </div>
   )
 }

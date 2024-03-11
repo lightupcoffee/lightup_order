@@ -50,6 +50,7 @@ export default async (req, res) => {
     client.release()
     res.status(200).json(data)
   } else {
+    await client.query(`delete from lightup."Order" WHERE orderid= ${orderId} ; `)
     res.status(500).json(data)
   }
 }

@@ -14,7 +14,14 @@ const ConfirmModal = ({ text, canceltext, confirmtext, onCancel, onConfirm, load
         >
           <p className="h1 mb-4">{text}</p>
           <div className=" flex justify-between gap-4">
-            <CButton className="" text={canceltext} mode={'secondary'} size={'sm'} click={onCancel}></CButton>
+            <CButton
+              className=""
+              text={canceltext}
+              mode={'secondary'}
+              size={'sm'}
+              click={onCancel}
+              disable={loading}
+            ></CButton>
             <CButton
               className=""
               text={confirmtext}

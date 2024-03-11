@@ -21,8 +21,12 @@ const cButton = ({ text, click, disable, mode, size, loading }) => {
   const disabledClasses = disable || loading ? '  cursor-not-allowed opacity-50' : ''
 
   return (
-    <div className={`${baseClasses} ${modeClasses} ${sizeClasses} ${disabledClasses}`} onClick={handleclick}>
-      {loading && <Spinner></Spinner>}
+    <div className={`${baseClasses} ${modeClasses} ${sizeClasses} ${disabledClasses} flex gap-2`} onClick={handleclick}>
+      {loading && (
+        <div className="w-5">
+          <Spinner></Spinner>
+        </div>
+      )}
       {text}
     </div>
   )

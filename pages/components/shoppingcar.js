@@ -103,12 +103,12 @@ const ShoppingCar = ({ car, tableid, paymenttypelist, onClose, removeCarItem, sh
             <span>NT ${totalAmount}</span>
           </div>
           <div className="mt-5 flex flex-col gap-2">
-            {/* <CButton
+            <CButton
               text={'Line Pay'}
               mode={'secondary'}
               disable={false}
               click={() => checkout(paymenttypelist.linepay)}
-            ></CButton> */}
+            ></CButton>
             <CButton
               text={'現金結帳'}
               mode={'secondary'}
