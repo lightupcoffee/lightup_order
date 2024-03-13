@@ -106,7 +106,7 @@ const ShoppingCar = ({ car, tableid, paymenttypelist, onClose, removeCarItem, sh
             <CButton
               text={'Line Pay'}
               mode={'secondary'}
-              disable={false}
+              disable={!car || car.length <= 0}
               click={() => checkout(paymenttypelist.linepay)}
             ></CButton>
             <CButton
