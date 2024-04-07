@@ -51,7 +51,7 @@ export default async (req, res) => {
     client.release()
     res.status(200).json(data)
   } else {
-    console.log(`linepayConfirm error: ${data}`)
+    console.log(`linepayConfirm error: ${JSON.stringify(data)}`)
     await client.query(`delete from lightup."Order" WHERE orderid= ${orderId} ; `)
     res.status(500).json(data)
   }

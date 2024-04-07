@@ -59,11 +59,11 @@ export default async (req, res) => {
     body: JSON.stringify(body),
   })
   const data = await response.json()
-  console.log(`response :${data}`)
+  console.log(`response :${JSON.stringify(data)}`)
   if (data.returnCode === '0000') {
     res.status(200).json(data)
   } else {
-    console.log(`linepayRequest error: ${data}`)
+    console.log(`linepayRequest error: ${JSON.stringify(data)}`)
     res.status(500).json(data)
   }
 }
