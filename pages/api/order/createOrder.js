@@ -38,7 +38,7 @@ export default async function createOrder(req, res) {
     )
     await client.query('COMMIT')
     const order = orderResult.rows[0]
-    console.log('create oreder success')
+    console.log(`create oreder success:orderid :${order.orderid}`)
     res.status(200).json(order)
   } catch (err) {
     console.log(err)

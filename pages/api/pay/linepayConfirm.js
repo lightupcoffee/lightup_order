@@ -21,6 +21,7 @@ export default async (req, res) => {
   const result = await client.query(`SELECT * FROM lightup."Order" where orderid =${orderId}`)
   const order = result.rows[0]
   if (!order) {
+    console.log(`查詢失敗 找不到訂單${orderId}`)
     res.status(500).json({ message: '查詢失敗', detail: `找不到訂單${orderId}` })
   }
 
@@ -50,6 +51,7 @@ export default async (req, res) => {
     client.release()
     res.status(200).json(data)
   } else {
+    console.log(`linepayConfirm error: ${data}`)
     await client.query(`delete from lightup."Order" WHERE orderid= ${orderId} ; `)
     res.status(500).json(data)
   }
