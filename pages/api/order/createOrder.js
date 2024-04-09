@@ -30,15 +30,31 @@ export default async function createOrder(req, res) {
 
     // 建立訂單並處理事務
     await client.query('BEGIN')
+    const insertQuery = `
+    INSERT INTO lightup."Order" (totalamount, status, tableid, createtime, paymenttype, item)
+    VALUES ($1, 0, $2, NOW(), $3, $4)
+    RETURNING *
+  `
 
-    const orderResult = await client.query(
-      `INSERT INTO lightup."Order" (totalamount, status, tableid, createtime,paymenttype, item)
-       VALUES ('${totalAmount}', 0, '${tableid}', NOW(),'${paymenttype}' ,'${JSON.stringify(orderitemlist)}')
-       RETURNING *`,
-    )
+    const orderResult = await client.query(insertQuery, [
+      totalAmount,
+      tableid,
+      paymenttype,
+      JSON.stringify(orderitemlist),
+    ])
     await client.query('COMMIT')
     const order = orderResult.rows[0]
-    console.log(`create oreder success:orderid :${order.orderid}`)
+    const orderId = order.orderid // 從返回的訂單中取得 orderid
+    const currentDate = new Date().toISOString().slice(0, 10).replace(/-/g, '') // 生成 YYYYMMDD 格式的日期
+    const ordernumber = `${currentDate}${String(orderId).padStart(5, '0')}` // 生成 ordernumber，如 "2024040900005"
+
+    // 更新 ordernumber
+    const updateQuery = ` UPDATE lightup."Order" SET ordernumber = $1 WHERE orderid = $2`
+
+    await client.query(updateQuery, [ordernumber, orderId])
+    await client.query('COMMIT')
+    order.ordernumber = ordernumber
+    console.log(`create oreder success:ordernumber :${ordernumber}`)
     res.status(200).json(order)
   } catch (err) {
     console.log(err)

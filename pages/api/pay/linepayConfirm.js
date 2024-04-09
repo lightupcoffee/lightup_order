@@ -16,13 +16,14 @@ function generateLinePayHeaders(channelId, channelSecretKey, uri, body) {
 }
 
 export default async (req, res) => {
-  const { transactionId, orderId } = req.body // 從請求中獲取交易ID和訂單ID
+  const { transactionId, ordernumber } = req.body // 從請求中獲取交易ID和訂單ID
   const client = await db.connect()
-  const result = await client.query(`SELECT * FROM lightup."Order" where orderid =${orderId}`)
+  const updateQuery = `SELECT * FROM lightup."Order" where ordernumber =$1`
+  const result = await client.query(updateQuery, [ordernumber])
   const order = result.rows[0]
   if (!order) {
-    console.log(`查詢失敗 找不到訂單${orderId}`)
-    res.status(500).json({ message: '查詢失敗', detail: `找不到訂單${orderId}` })
+    console.log(`查詢失敗 找不到訂單${ordernumber}`)
+    res.status(500).json({ message: '查詢失敗', detail: `找不到訂單${ordernumber}` })
   }
 
   const channelId = process.env.LINE_PAY_CHANNEL_ID
@@ -45,14 +46,21 @@ export default async (req, res) => {
 
   const data = await response.json()
   if (data.returnCode === '0000') {
-    await client.query(
-      `UPDATE  lightup."Order" SET transactionid=${transactionId}, paymenttime=NOW() , status=1 where orderid = ${orderId}`,
-    )
-    client.release()
+    // 使用參數化查詢來更新訂單
+    try {
+      const updateQuery = `UPDATE lightup."Order" SET transactionid = $1, paymenttime = NOW(), status = 1 WHERE ordernumber = $2`
+      await client.query(updateQuery, [transactionId, ordernumber])
+      client.release()
+    } catch {
+      console.log(`set transactionid error ,transactionid:${transactionId}, ordernumber:${ordernumber}`)
+    }
+
     res.status(200).json(data)
   } else {
     console.log(`linepayConfirm error: ${JSON.stringify(data)}`)
-    await client.query(`delete from lightup."Order" WHERE orderid= ${orderId} ; `)
+    // 使用參數化查詢來刪除訂單
+    const deleteQuery = `DELETE FROM lightup."Order" WHERE ordernumber = $1`
+    await client.query(deleteQuery, [ordernumber])
     res.status(500).json(data)
   }
 }

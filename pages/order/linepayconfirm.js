@@ -5,7 +5,12 @@ import { useRouter } from 'next/router'
 import Spinner from '../components/spinner'
 export default function LinepayConfirm() {
   const router = useRouter()
-  const { tableId, transactionId, orderId, linepaysuccess } = router.query
+  const {
+    tableId,
+    transactionId,
+    linepaysuccess,
+    orderId /**orderId是Linepay自動帶入，實際上等於我們的ordernumber */,
+  } = router.query
   const [showOrderSuccessModal, setshowOrderSuccessModal] = useState(false)
 
   useEffect(() => {
@@ -30,7 +35,7 @@ export default function LinepayConfirm() {
       //API要求的資料
       data: {
         transactionId: transactionId,
-        orderId: orderId,
+        ordernumber: orderId,
       },
     })
       .then((res) => {
@@ -77,7 +82,7 @@ export default function LinepayConfirm() {
                 />
               </div>
               <p className="h1 mb-4">訂單建立成功</p>
-              <div className="c2">您的訂單編號為 #{orderId.toString().padStart(6, '0')}</div>
+              <div className="c2">您的訂單編號為 #{orderId.toString()}</div>
               <div className="c2">請稍待片刻，餐點將為您準備</div>
             </div>
           ) : (

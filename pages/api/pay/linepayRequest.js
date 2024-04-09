@@ -26,7 +26,7 @@ export default async (req, res) => {
   const body = {
     amount: order.totalamount,
     currency: 'TWD',
-    orderId: order.orderid,
+    orderId: order.ordernumber,
     packages: [
       {
         id: '1',
@@ -46,7 +46,6 @@ export default async (req, res) => {
       cancelUrl: `${process.env.API_BASE_URL}?notableId`, //用戶取消付款後的重定向URL
     },
   }
-
   // 生成請求標頭
   const headers = generateLinePayHeaders(channelId, channelSecretKey, uri, body)
 
