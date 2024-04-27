@@ -21,6 +21,7 @@ const NotificationModal = ({ onClose }) => {
           <li>人數到齊才入座，請勿擅自換桌。</li>
           <li>客滿時限90分鐘，禁止商業攝影。</li>
           <li>不提供打包服務。</li>
+          <li>同組客人請以一人代表點餐即可。</li>
         </ul>
         <div className="px-12 ">
           <CButton text={'我知道了，我願意遵守'} mode={'primary'} size={'sm'} click={onClose}></CButton>
