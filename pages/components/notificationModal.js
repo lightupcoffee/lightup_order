@@ -14,15 +14,16 @@ const NotificationModal = ({ onClose }) => {
           <li>
             禁止嬉鬧玩耍， 談話請注意音量，<br></br>請勿影響其他客人。
           </li>
+          <li>玻璃杯本身杯壁較薄，使用時請加以小心。</li>
           <li>
             如損壞店內物品，餐具類一律賠償500<br></br>元新台幣，其他另計。
           </li>
-          <li>玻璃杯本身杯壁較薄，使用時請加以小心。</li>
           <li>禁止外食，垃圾請自行帶離。</li>
           <li>人數到齊才入座，請勿擅自換桌。</li>
           <li>客滿時限90分鐘，禁止商業攝影。</li>
           <li>不提供打包服務。</li>
           <li>同組客人請以一人代表點餐即可。</li>
+          <li>高賓閣場館提供廁所，為男女共用，使用時請保持整潔</li>
         </ul>
         <div className="px-12 ">
           <CButton text={'我知道了，我願意遵守'} mode={'primary'} size={'sm'} click={onClose}></CButton>
